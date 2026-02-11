@@ -1,0 +1,651 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, X, Download, ChevronRight, Check, Menu } from 'lucide-react';
+
+// --- Data: Projects & Case Studies ---
+const PROJECT_DATA = [
+  {
+    id: 1,
+    title: "AA1 RU Live Ops",
+    category: "Live Ops Strategy",
+    status: "Live / Ongoing",
+    tags: ["Live Ops", "KPI", "Event Strategy"],
+    brand: "Revenue +208%",
+    summary: "현지 유저 지표(MAU/매출)를 기반으로 이벤트·운영 전략을 재설계하고, 라이브 일정/BTS/현지화 이슈를 통합 관리해 매출 성과를 만들었습니다.",
+    outcome: "Revenue +208% 성장",
+    imageColor: "bg-[#FF2E00]",
+    details: {
+      oneLiner: "현지 유저 지표 기반으로 운영/이벤트 전략을 재설계하고, 일정·이슈·현지화를 통합 관리해 Revenue +208% 성과를 만들었습니다.",
+      context: "러시아 서비스는 시장 특성과 유저 반응이 다르고, 라이브 이슈가 일정·콘텐츠·개발 이슈와 동시에 발생합니다. 빠른 의사결정과 추적 가능한 이슈 관리가 없으면 운영 비용이 급격히 증가합니다.",
+      goalMetrics: [
+        "Goal: 지표 기반 운영 전략으로 KPI 달성",
+        "Metrics: Revenue, MAU/활성 지표, 운영 이슈 처리 리드타임"
+      ],
+      role: [
+        "KPI/사업 전략 수립 및 이벤트 플래닝",
+        "Live 일정/BTS 및 버전별 이슈 트래킹",
+        "현지화 협의 및 개발 이슈 커뮤니케이션"
+      ],
+      approach: [
+        "KPI 중심으로 우선순위를 고정하고 운영 플랜을 단일화했습니다.",
+        "버전별 이슈를 한 흐름으로 묶어 공유/결정/실행의 지연을 줄였습니다."
+      ],
+      challenges: [
+        { c: "현지 시장 맥락 차이로 인한 의사결정 변동", s: "지표 기반 기준을 선명히 하고, 실험-학습 루프를 빠르게 운영" },
+        { c: "일정/BTS/이슈의 동시다발로 커뮤니케이션 비용 증가", s: "단일 트래킹 구조로 정리하여 추적성과 정합성 강화" }
+      ],
+      outcome: "Revenue +208% 달성 및 운영 리스크 감소",
+      learning: "라이브 운영은 '더 열심히'가 아니라 지표–우선순위–협업 구조를 먼저 설계해야 속도와 품질이 함께 오른다는 것을 체득했습니다."
+    }
+  },
+  {
+    id: 2,
+    title: "AA1 NAEU Ops",
+    category: "Risk Management",
+    status: "Closed",
+    tags: ["Ops", "Royalty", "Risk Mgmt"],
+    brand: "End-to-End Ops",
+    summary: "서비스 지표·로열티·버그 리포트·현지화 협의·종료 계약까지 End-to-End로 정리하며 운영 리스크를 체계적으로 관리했습니다.",
+    outcome: "운영/정산/계약 정합성 확보",
+    imageColor: "bg-[#3B27BA]",
+    details: {
+      oneLiner: "서비스 지표·로열티·버그 리포트·현지화 협의·종료 계약까지 End-to-End로 관리해 운영 리스크를 체계적으로 정리했습니다.",
+      context: "글로벌 서비스 운영은 기능 운영뿐 아니라 정산/계약의 정합성까지 포함됩니다. 운영·정산·계약이 분리돼 움직이면 책임 경계가 흐려지고 리스크가 커집니다.",
+      goalMetrics: [
+        "Goal: 운영 리스크 최소화 및 정합성 확보",
+        "Metrics: 로열티 정산 정확도, 이슈 추적성, 계약 종료 완료도"
+      ],
+      role: [
+        "서비스 지표 분석 및 로열티 관리",
+        "버그 리포트 운영 및 현지화 협의 지원",
+        "종료 계약 진행"
+      ],
+      approach: [
+        "운영/정산/이슈를 하나의 관리 흐름으로 엮어 추적성을 강화했습니다.",
+        "버그 리포트는 영향 범위와 우선순위를 기준으로 정리해 커뮤니케이션 비용을 낮췄습니다."
+      ],
+      challenges: [
+        { c: "운영과 정산/계약의 분리로 인한 누락/불일치", s: "단일 운영 체계로 묶어 변경 이력과 의사결정 근거를 남김" }
+      ],
+      outcome: "운영·정산·계약 전 구간의 정합성 강화 및 안정적 종료",
+      learning: "이 경험은 IT기업에서도 유효한 End-to-End 리스크 매니지먼트 역량(정합성/추적성/커뮤니케이션)으로 확장 가능합니다."
+    }
+  },
+  {
+    id: 3,
+    title: "TTS Pipeline",
+    category: "AI Operations",
+    status: "Production",
+    tags: ["TTS", "L10N", "Unreal"],
+    brand: "Efficiency & Quality",
+    summary: "L10N 기반 대사 흐름을 정의하고 ElevenLabs 보이스로 생성한 TTS를 Unreal Editor에서 적용할 수 있도록 프로세스를 구축했습니다.",
+    outcome: "재작업 비용 감소, 품질 확보",
+    imageColor: "bg-black",
+    details: {
+      oneLiner: "L10N 기반 대사 흐름을 정리하고 ElevenLabs 보이스로 생성한 TTS를 Unreal Editor에서 적용·검수할 수 있도록 파이프라인을 구축했습니다.",
+      context: "TTS는 생성 자체보다 데이터 정합성, 엔진 적용의 재현성, QA 기준의 일관성이 깨질 때 재작업 비용이 급증합니다.",
+      goalMetrics: [
+        "Goal: 재작업 최소화, 품질 게이트 정립",
+        "Metrics: 제작/검수 리드타임, 재작업률, QA 이슈 발생률"
+      ],
+      role: [
+        "TTS 제작 워크플로우 정의 및 제작/관리",
+        "ElevenLabs 기반 생성 및 Unreal Editor 적용 운영",
+        "QA 기준 수립 및 검수 운영"
+      ],
+      approach: [
+        "'입력 데이터(L10N)'를 고정해 앞단 흔들림으로 인한 재작업을 줄였습니다.",
+        "생성→적용→검수 단계별 체크포인트를 설계해 추적성과 품질을 확보했습니다."
+      ],
+      challenges: [
+        { c: "데이터 변경이 잦아 재작업이 반복", s: "L10N 흐름과 검수 기준을 명문화해 변경 영향 범위를 통제" }
+      ],
+      outcome: "TTS 제작을 개별 작업이 아닌 프로덕션 운영으로 전환",
+      learning: "AI 기능은 운영이 곧 품질입니다. 재현성·추적성·품질 게이트 관점으로 운영 체계를 잡았습니다."
+    }
+  },
+  {
+    id: 4,
+    title: "Auto & Tooling",
+    category: "Internal Tools",
+    status: "Internal Tooling",
+    tags: ["Automation", "Python", "SQL"],
+    brand: "Time Saving",
+    summary: "JQL 기반 주간보고 자동화 및 SQLite·Python(JSON)·PyQt 기반 검색 도구로 반복 업무 병목을 줄였습니다.",
+    outcome: "수동 취합/검증 시간 절감",
+    imageColor: "bg-[#FF2E00]",
+    details: {
+      oneLiner: "JQL 기반 주간보고 자동화와 SQLite/Python/PyQt 도구로 반복 업무 병목을 줄이고 데이터 검증 속도를 높였습니다.",
+      context: "주간보고/데이터 검증은 사람이 직접 취합하면 누락/중복/버전 불일치가 발생해 의사결정 신뢰도를 떨어뜨립니다.",
+      goalMetrics: [
+        "Goal: 반복 업무 자동화 및 보고 신뢰도 향상",
+        "Metrics: 취합 시간 절감, 누락률 감소, 검증 리드타임 단축"
+      ],
+      role: [
+        "Jira 이슈를 JQL로 조회해 보고에 자동 반영되는 구조 설계",
+        "SQLite 적재 + Python 처리 + PyQt UI로 탐색/검증 도구 설계"
+      ],
+      approach: [
+        `반복 업무를 '사람 작업'에서 '시스템 작업'으로 전환하는 기준을 세웠습니다.`,
+        "데이터 탐색/검증 UI를 단순화하고 검색 기준을 표준화했습니다."
+      ],
+      challenges: [
+        { c: "보고용 데이터가 흩어져 있어 취합 비용 증가", s: "단일 조회(JQL)와 자동 반영으로 소스 오브 트루스를 고정" }
+      ],
+      outcome: "수동 취합/정리 시간 절감 및 데이터 검증 속도 향상",
+      learning: "PM이 병목을 발견하면 자동화/툴링으로 실제 시간을 절약하는 결과를 만들어야 조직의 속도가 올라갑니다."
+    }
+  }
+];
+
+// --- Components ---
+
+// 1. Navigation Sidebar
+const Sidebar = ({ activeSection }) => {
+  const menuItems = [
+    { id: 'hero', label: 'Home', color: 'bg-[#F3F0E7]', text: 'text-black' },
+    { id: 'proof', label: 'Proof', color: 'bg-black', text: 'text-white' },
+    { id: 'projects', label: 'Projects', color: 'bg-[#FF2E00]', text: 'text-white' },
+    { id: 'capabilities', label: 'Capabilities', color: 'bg-[#3B27BA]', text: 'text-white' },
+    { id: 'about', label: 'About', color: 'bg-[#F3F0E7]', text: 'text-black' },
+    { id: 'contact', label: 'Contact', color: 'bg-black', text: 'text-white' },
+  ];
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <div className="hidden lg:flex flex-col fixed left-4 top-4 bottom-4 w-64 z-50 gap-2">
+      <div className="bg-[#F3F0E7] p-4 rounded-xl mb-2 border-2 border-black/5 flex flex-col gap-2">
+        <div className="flex justify-between items-center">
+          <span className="font-bold text-sm text-gray-500">Helen Kim</span>
+          <span className="font-bold text-sm text-gray-500">PM</span>
+        </div>
+        <button className="flex items-center justify-between bg-black text-white text-xs px-3 py-2 rounded-lg hover:bg-[#FF2E00] transition-colors">
+          <span>Download CV</span>
+          <Download size={12} />
+        </button>
+      </div>
+
+      <div className="flex-1 flex flex-col gap-2 overflow-y-auto no-scrollbar">
+        {menuItems.map((item, index) => (
+          <motion.button
+            key={item.id}
+            onClick={() => scrollToSection(item.id)}
+            className={`
+              relative p-6 rounded-xl text-left transition-all duration-500 ease-out
+              ${item.color} ${item.text}
+              ${activeSection === item.id ? 'flex-[2]' : 'flex-1'}
+              hover:flex-[1.5] group overflow-hidden border border-black/5
+            `}
+            layout
+          >
+            <span className="absolute top-4 left-4 text-xs font-mono opacity-60">0{index}</span>
+            <span className={`
+              absolute bottom-4 left-4 text-xl font-bold tracking-tight
+              transition-transform duration-300
+              ${activeSection === item.id ? 'scale-110 origin-bottom-left' : ''}
+            `}>
+              {item.label}
+            </span>
+
+            {activeSection === item.id && (
+              <motion.div
+                layoutId="activeDot"
+                className={`absolute top-4 right-4 w-2 h-2 rounded-full ${item.text === 'text-white' ? 'bg-white' : 'bg-[#FF2E00]'}`}
+              />
+            )}
+          </motion.button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// 2. Project Card
+const ProjectCard = ({ project, onClick, colSpan = "col-span-1" }) => {
+  return (
+    <motion.div
+      layoutId={`card-${project.id}`}
+      onClick={() => onClick(project)}
+      className={`relative group rounded-3xl overflow-hidden cursor-pointer ${colSpan} h-[450px] border border-black/10`}
+      whileHover={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
+      <div className={`absolute inset-0 ${project.imageColor} transition-colors duration-500 group-hover:bg-opacity-90`} />
+
+      {/* Content */}
+      <div className="relative h-full p-8 flex flex-col justify-between text-white z-10">
+        <div className="flex justify-between items-start">
+          <div className="flex gap-2">
+            <span className="px-3 py-1 border border-white/20 rounded-full text-xs backdrop-blur-md bg-black/20">
+              {project.status}
+            </span>
+            {project.tags.slice(0, 2).map((tag, i) => (
+              <span key={i} className="px-3 py-1 border border-white/20 rounded-full text-xs backdrop-blur-md hidden md:inline-block">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <motion.div className="bg-white text-black p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+            <ArrowRight size={16} />
+          </motion.div>
+        </div>
+
+        <div>
+          <h3 className="text-4xl font-bold mb-4 leading-none">{project.title}</h3>
+          <p className="text-white/80 text-sm mb-4 line-clamp-2 leading-relaxed">
+            {project.summary}
+          </p>
+          <div className="border-t border-white/20 pt-4 mt-4">
+            <p className="font-mono text-xs opacity-60 mb-1">OUTCOME</p>
+            <p className="text-xl font-bold text-[#FF2E00] bg-white/10 w-fit px-2 py-1 rounded inline-block">
+              {project.outcome}
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// 3. Project Detail Modal
+const ProjectModal = ({ project, onClose }) => {
+  if (!project) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/60 backdrop-blur-md"
+      onClick={onClose}
+    >
+      <motion.div
+        layoutId={`card-${project.id}`}
+        className="bg-[#F3F0E7] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header (Colored) */}
+        <div className={`${project.imageColor} p-8 md:p-12 text-white relative shrink-0`}>
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 p-2 bg-black/20 hover:bg-black/40 rounded-full transition-colors"
+          >
+            <X size={24} />
+          </button>
+
+          <div className="mb-6 flex flex-wrap gap-2">
+            <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-mono">{project.category}</span>
+            <span className="bg-black/20 px-3 py-1 rounded-full text-sm font-mono">{project.status}</span>
+          </div>
+
+          <h2 className="text-5xl md:text-6xl font-bold mb-4 leading-tight">{project.title}</h2>
+          <p className="text-xl md:text-2xl opacity-90 font-light leading-relaxed max-w-2xl">
+            {project.details.oneLiner}
+          </p>
+        </div>
+
+        {/* Content Body */}
+        <div className="p-8 md:p-12 space-y-12 text-black">
+
+          {/* 1. Context & Goal */}
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h4 className="font-bold text-lg mb-4 text-[#3B27BA] flex items-center gap-2"><ChevronRight size={16} /> Context</h4>
+              <p className="leading-relaxed opacity-80">{project.details.context}</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl border border-black/5 shadow-sm">
+              <h4 className="font-bold text-lg mb-4 text-[#3B27BA]">Goal & Metrics</h4>
+              <ul className="space-y-2">
+                {project.details.goalMetrics.map((item, i) => (
+                  <li key={i} className="flex gap-2 items-start text-sm">
+                    <div className="w-1.5 h-1.5 bg-[#FF2E00] rounded-full mt-2 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* 2. My Role & Approach */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6 border-b-2 border-black/10 pb-2">My Role & Approach</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 className="font-mono text-sm opacity-50 mb-3">MY ROLE</h4>
+                <ul className="space-y-2">
+                  {project.details.role.map((role, i) => (
+                    <li key={i} className="flex gap-2 items-center font-medium">
+                      <Check size={16} className="text-[#3B27BA]" /> {role}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-mono text-sm opacity-50 mb-3">APPROACH</h4>
+                <ul className="space-y-3">
+                  {project.details.approach.map((app, i) => (
+                    <li key={i} className="bg-white p-3 rounded-lg border border-black/5 text-sm">
+                      {app}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Challenges & Solutions */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6 border-b-2 border-black/10 pb-2">Challenges & Solutions</h3>
+            <div className="space-y-4">
+              {project.details.challenges.map((cs, i) => (
+                <div key={i} className="flex flex-col md:flex-row gap-4 p-4 rounded-xl bg-gray-100">
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-[#FF2E00] block mb-1">CHALLENGE</span>
+                    <p className="text-sm font-medium">{cs.c}</p>
+                  </div>
+                  <div className="hidden md:block w-px bg-black/10" />
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-[#3B27BA] block mb-1">SOLUTION</span>
+                    <p className="text-sm">{cs.s}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 4. Outcome & Learning */}
+          <div className="bg-black text-white p-8 rounded-2xl">
+            <div className="mb-8">
+              <h4 className="font-mono text-[#FF2E00] mb-2">FINAL OUTCOME</h4>
+              <p className="text-3xl font-bold">{project.details.outcome}</p>
+            </div>
+            <div>
+              <h4 className="font-mono opacity-60 mb-2">LEARNINGS</h4>
+              <p className="text-white/80 leading-relaxed italic">
+                "{project.details.learning}"
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// 4. Proof Card Component
+const ProofCard = ({ title, desc, index }) => (
+  <div className="bg-white p-6 rounded-2xl border border-black/5 hover:border-black transition-colors flex flex-col justify-between min-h-[180px]">
+    <div>
+      <span className="font-mono text-xs opacity-40 mb-2 block">0{index + 1} / Proof</span>
+      <h3 className="text-xl font-bold mb-3">{title}</h3>
+    </div>
+    <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
+  </div>
+);
+
+// --- Main App Component ---
+
+export default function App() {
+  const [activeSection, setActiveSection] = useState('hero');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['hero', 'proof', 'projects', 'capabilities', 'about', 'contact'];
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="bg-[#EAEAEA] min-h-screen font-sans selection:bg-[#FF2E00] selection:text-white">
+
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 p-4 z-50 flex justify-between items-center bg-[#F3F0E7] border-b border-black/10">
+        <span className="font-bold text-xl">Helen Kim</span>
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+
+      <div className="flex flex-col lg:flex-row">
+
+        <Sidebar activeSection={activeSection} />
+
+        <main className="flex-1 lg:ml-72 lg:mr-4 lg:py-4 flex flex-col gap-4">
+
+          {/* 1. HERO Section */}
+          <section id="hero" className="min-h-[90vh] bg-[#F3F0E7] rounded-3xl p-6 lg:p-12 flex flex-col relative overflow-hidden">
+            <div className="flex justify-between items-start border-b-2 border-black/10 pb-6 mb-8 z-10">
+              <span className="font-mono text-sm tracking-widest uppercase">Global PM Portfolio</span>
+              <div className="flex gap-4 text-sm font-bold">
+                <span>Seoul, KR</span>
+                <span>Open to Work</span>
+              </div>
+            </div>
+
+            <div className="relative z-10 flex-1 flex flex-col justify-center">
+              <h1 className="text-[12vw] leading-[0.8] font-bold tracking-tighter text-black mb-4">
+                HELEN<br />KIM
+              </h1>
+
+              <div className="grid lg:grid-cols-2 gap-12 mt-8">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+                    글로벌 서비스 운영에서 자동화까지,<br />
+                    <span className="text-[#FF2E00]">실행으로 성과를 만드는 PM</span>
+                  </h2>
+                  <div className="flex flex-wrap gap-4">
+                    <button onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })} className="bg-black text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+                      View Projects
+                    </button>
+                    <button className="border-2 border-black px-8 py-4 rounded-full font-bold hover:bg-black hover:text-white transition-colors flex gap-2 items-center">
+                      Download CV <Download size={18} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-white p-8 rounded-2xl border border-black/5 shadow-xl rotate-1 hover:rotate-0 transition-transform duration-300">
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="bg-[#3B27BA] text-white px-3 py-1 rounded-full text-xs font-mono">SUMMARY</span>
+                    <span className="text-4xl">👩🏻‍💻</span>
+                  </div>
+                  <ul className="space-y-4">
+                    <li className="border-b border-black/5 pb-2">
+                      <span className="block text-xs font-mono opacity-50 mb-1">ROLE</span>
+                      <span className="text-xl font-bold">Global PM (Live Ops / Localization / TTS)</span>
+                    </li>
+                    <li className="border-b border-black/5 pb-2">
+                      <span className="block text-xs font-mono opacity-50 mb-1">STRENGTHS</span>
+                      <span className="font-medium">Cross-functional execution, Process design, Automation mindset</span>
+                    </li>
+                    <li>
+                      <span className="block text-xs font-mono opacity-50 mb-1">KEYWORDS</span>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {['KPI', 'L10N', 'TTS', 'Jira', 'SQL', 'Python'].map(tag => (
+                          <span key={tag} className="bg-gray-100 px-2 py-1 rounded text-xs font-bold">{tag}</span>
+                        ))}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 2. PROOF Section */}
+          <section id="proof" className="bg-black rounded-3xl p-8 lg:p-12 text-white">
+            <div className="mb-12 border-b border-white/20 pb-4 flex justify-between items-end">
+              <h2 className="text-4xl font-bold">Core Competencies</h2>
+              <span className="font-mono text-sm text-[#FF2E00]">PROVEN TRACK RECORD</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-black">
+              <ProofCard
+                index={0} title="Global Live Ops"
+                desc="KR↔RU/NAEU 다국가 운영 경험 기반으로 KPI 중심 운영과 이슈 관리를 수행했습니다."
+              />
+              <ProofCard
+                index={1} title="L10N & Content"
+                desc="L10N 흐름을 정리하고 현지화 협의/이슈 커뮤니케이션을 통해 품질과 일정 리스크를 관리했습니다."
+              />
+              <ProofCard
+                index={2} title="TTS Pipeline"
+                desc="L10N–TTS 생성–엔진 적용–QA까지 운영 가능한 파이프라인으로 체계화했습니다."
+              />
+              <ProofCard
+                index={3} title="Automation"
+                desc="Jira/Confluence 보고 자동화 및 Python 기반 도구로 반복 업무를 줄였습니다."
+              />
+            </div>
+          </section>
+
+          {/* 3. PROJECTS Section */}
+          <section id="projects" className="min-h-screen bg-[#FF2E00] rounded-3xl p-8 lg:p-12 text-white">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+              <div>
+                <span className="border border-white/30 px-3 py-1 rounded-full text-xs font-mono mb-4 inline-block">03 / Selected Work</span>
+                <h2 className="text-6xl md:text-8xl font-bold tracking-tight">Recent Projects</h2>
+              </div>
+              <div className="text-right hidden md:block">
+                <p className="font-mono text-sm opacity-80">Click cards for details</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {PROJECT_DATA.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  onClick={setSelectedProject}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* 4. CAPABILITIES Section */}
+          <section id="capabilities" className="bg-[#3B27BA] rounded-3xl p-8 lg:p-12 text-white">
+            <span className="border border-white/30 px-3 py-1 rounded-full text-xs font-mono mb-12 inline-block">04 / Capabilities</span>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Pillar 1 */}
+              <div className="p-8 border border-white/20 rounded-2xl bg-[#3B27BA] hover:bg-white hover:text-[#3B27BA] transition-colors group">
+                <h3 className="text-3xl font-bold mb-6">Live Ops &<br />Partners</h3>
+                <ul className="space-y-4 opacity-80 group-hover:opacity-100">
+                  <li className="flex gap-2 text-sm font-medium border-b border-current pb-2">• KPI 기반 운영 전략 및 플래닝</li>
+                  <li className="flex gap-2 text-sm font-medium border-b border-current pb-2">• BTS/이슈 트래킹 및 조율</li>
+                  <li className="flex gap-2 text-sm font-medium">• 현지화 협의 및 커뮤니케이션</li>
+                </ul>
+              </div>
+
+              {/* Pillar 2 */}
+              <div className="p-8 border border-white/20 rounded-2xl bg-[#3B27BA] hover:bg-white hover:text-[#3B27BA] transition-colors group">
+                <h3 className="text-3xl font-bold mb-6">TTS & Content<br />Pipeline</h3>
+                <ul className="space-y-4 opacity-80 group-hover:opacity-100">
+                  <li className="flex gap-2 text-sm font-medium border-b border-current pb-2">• L10N 기반 데이터 흐름 정리</li>
+                  <li className="flex gap-2 text-sm font-medium border-b border-current pb-2">• ElevenLabs TTS 제작/운영</li>
+                  <li className="flex gap-2 text-sm font-medium">• QA 기준 수립 및 검수</li>
+                </ul>
+              </div>
+
+              {/* Pillar 3 */}
+              <div className="p-8 border border-white/20 rounded-2xl bg-[#3B27BA] hover:bg-white hover:text-[#3B27BA] transition-colors group">
+                <h3 className="text-3xl font-bold mb-6">Automation &<br />Data Workflow</h3>
+                <ul className="space-y-4 opacity-80 group-hover:opacity-100">
+                  <li className="flex gap-2 text-sm font-medium border-b border-current pb-2">• Jira/Confluence 리포팅 자동화</li>
+                  <li className="flex gap-2 text-sm font-medium border-b border-current pb-2">• Python/SQL 기반 데이터 처리</li>
+                  <li className="flex gap-2 text-sm font-medium">• 반복 업무 병목 제거 툴링</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* 5. ABOUT Section */}
+          <section id="about" className="bg-[#F3F0E7] rounded-3xl p-8 lg:p-20 text-black">
+            <div className="max-w-4xl mx-auto">
+              <span className="font-mono text-sm text-[#3B27BA] mb-6 block">05 / About Helen</span>
+              <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-12">
+                운영을 '사람의 노력'으로만 유지하지 않고,<br />
+                <span className="text-gray-400">시스템으로 재현 가능하게 만드는 데 집중합니다.</span>
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-12">
+                <div>
+                  <p className="text-lg leading-relaxed opacity-80">
+                    저는 글로벌 서비스 운영 경험을 바탕으로, 여러 이해관계자 사이에서 문제를 정의하고 실행 가능한 프로세스와 도구로 해결을 만드는 PM입니다.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-bold mb-4 text-sm tracking-wide">WORKING STYLE</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    {['Data-informed decisions', 'Clear ownership', 'QA-first mindset', 'Automate what repeats'].map((style, i) => (
+                      <div key={i} className="bg-white p-3 rounded-lg border border-black/5 text-sm font-bold text-center flex items-center justify-center shadow-sm">
+                        {style}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 6. CONTACT Section */}
+          <section id="contact" className="bg-black rounded-3xl p-8 lg:p-20 text-white text-center flex flex-col items-center justify-center min-h-[50vh]">
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 max-w-4xl">
+              Let's build <span className="text-[#FF2E00]">scalable operations</span> and AI-ready workflows.
+            </h2>
+            <p className="text-xl opacity-60 mb-12 max-w-2xl">
+              프로젝트/제품의 운영 복잡도를 줄이고, 품질과 속도를 동시에 올리는 방법을 함께 만들고 싶습니다.
+            </p>
+
+            <div className="flex flex-wrap gap-4 justify-center">
+              <button className="bg-[#3B27BA] px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+                Email Me
+              </button>
+              <button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+                LinkedIn Profile
+              </button>
+              <button className="border border-white/30 px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition-colors">
+                Download CV
+              </button>
+            </div>
+
+            <div className="mt-20 pt-8 border-t border-white/10 w-full flex justify-between items-end font-mono text-xs opacity-40">
+              <span>© 2026 Helen Kim Portfolio.</span>
+              <span>Based on Raw Materials Design.</span>
+            </div>
+          </section>
+
+        </main>
+      </div>
+
+      {/* MODAL Overlay */}
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
