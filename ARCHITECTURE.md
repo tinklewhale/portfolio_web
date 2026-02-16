@@ -2,6 +2,7 @@
 
 > Portfolio Web 프로젝트 구조 및 컴포넌트 설명
 > 작성일: 2026-02-15
+> 최종 업데이트: 2026-02-16
 
 ---
 
@@ -93,11 +94,10 @@ App (root)
 ├── MobileHeader (mobile only)
 ├── main
 │   ├── HeroSection (#hero)
-│   ├── ProofSection (#proof)
-│   │   └── ProofCard × 4
+│   ├── ProofSection (#proof) - 3개 pillar 통합
 │   ├── ProjectsSection (#projects)
 │   │   └── ProjectCard × 4
-│   ├── CapabilitiesSection (#capabilities)
+│   ├── SkillsSection (#skills) - 3개 카드
 │   ├── AboutSection (#about)
 │   └── ContactSection (#contact)
 └── AnimatePresence
@@ -355,10 +355,9 @@ useEffect(() => {
 
 | Color | Hex | Tailwind Class | Usage |
 |-------|-----|----------------|-------|
-| 베이지 | `#F3F0E7` | `bg-[#F3F0E7]` | Hero, About 섹션 |
-| 블랙 | `#000000` | `bg-black` | Proof, Contact 섹션 |
-| 레드 | `#FF2E00` | `bg-[#FF2E00]` | Projects 섹션, 강조 |
-| 퍼플 | `#3B27BA` | `bg-[#3B27BA]` | Capabilities 섹션 |
+| 베이지 | `#F3F0E7` | `bg-[#F3F0E7]` | Hero, Skills 섹션 |
+| 블랙 | `#000000` | `bg-black` | Proof, About 섹션 |
+| 에메랄드 | `#50C878` | `bg-[#50C878]` | Projects, Contact 섹션, 강조색 |
 | 그레이 | `#EAEAEA` | `bg-[#EAEAEA]` | 페이지 배경 |
 
 ### 5.3 타이포그래피
@@ -519,21 +518,21 @@ npm run build
 - 최소 높이: `min-h-[90vh]`
 - Summary 카드: 회전 효과 (`rotate-1 hover:rotate-0`)
 
-### 10.2 Proof Section ([495-519](src/App.jsx#L495-L519))
+### 10.2 Proof Section ([498-538](src/App.jsx#L498-L538))
 
 **주요 요소**:
 - 타이틀: "Core Competencies"
-- 4개 ProofCard:
-  1. Global Live Ops
-  2. L10N & Content
-  3. TTS Pipeline
-  4. Automation
+- 3개 Pillar (Capabilities와 통합):
+  1. Live Ops & Partners
+  2. TTS & Content Pipeline
+  3. Automation & Data Workflow
 
 **스타일 특징**:
 - 배경: `bg-black` (블랙)
-- 그리드: `grid-cols-1 md:grid-cols-2 lg:grid-cols-4`
+- 그리드: `grid-cols-1 lg:grid-cols-3`
+- 호버 시: `hover:bg-white hover:text-black`
 
-### 10.3 Projects Section ([522-542](src/App.jsx#L522-L542))
+### 10.3 Projects Section ([541-560](src/App.jsx#L541-L560))
 
 **주요 요소**:
 - 타이틀: "Recent Projects"
@@ -541,24 +540,25 @@ npm run build
 - 클릭 시 모달 팝업
 
 **스타일 특징**:
-- 배경: `bg-[#FF2E00]` (레드)
+- 배경: `bg-[#50C878]` (에메랄드)
 - 최소 높이: `min-h-screen`
 - 그리드: `grid-cols-1 md:grid-cols-2`
 
-### 10.4 Capabilities Section ([545-579](src/App.jsx#L545-L579))
+### 10.4 Skills Section ([563-585](src/App.jsx#L563-L585))
 
 **주요 요소**:
-- 3개 기둥 (Pillar):
-  1. Live Ops & Partners
-  2. TTS & Content Pipeline
-  3. Automation & Data Workflow
+- 타이틀: "Skills & Tools"
+- 3개 카드:
+  1. Product Ops & Collaboration (Jira, Notion, MS Office, Figma)
+  2. Data & Automation (SQL, Git, AI Tools)
+  3. Design & Media Production (Blender, Photoshop, Illustrator, Premiere Pro, After Effects)
 
 **스타일 특징**:
-- 배경: `bg-[#3B27BA]` (퍼플)
-- 호버 시: `hover:bg-white hover:text-[#3B27BA]`
+- 배경: `bg-[#F3F0E7]` (베이지)
+- 카드: 흰색 배경, 호버 시 `hover:bg-black hover:text-white`
 - 그리드: `grid-cols-1 lg:grid-cols-3`
 
-### 10.5 About Section ([582-608](src/App.jsx#L582-L608))
+### 10.5 About Section ([588-614](src/App.jsx#L588-L614))
 
 **주요 요소**:
 - 메인 문구: "운영을 '사람의 노력'으로만 유지하지 않고..."
@@ -566,19 +566,25 @@ npm run build
 - Working Style 태그 4개
 
 **스타일 특징**:
-- 배경: `bg-[#F3F0E7]` (베이지)
+- 배경: `bg-black` (블랙)
+- 텍스트: 흰색
 - 최대 너비: `max-w-4xl mx-auto`
 
-### 10.6 Contact Section ([611-636](src/App.jsx#L611-L636))
+### 10.6 Contact Section ([617-644](src/App.jsx#L617-L644))
 
 **주요 요소**:
 - 헤드라인: "Let's build scalable operations..."
 - 설명: "프로젝트/제품의 운영 복잡도를 줄이고..."
-- 3개 버튼: Email Me, LinkedIn Profile, Download CV
+- 4개 버튼: Email Me, LinkedIn Profile, Download CV, Career Description
 - Footer: © 2026 Helen Kim Portfolio
 
+**연락처 정보**:
+- Email: hano9758@gmail.com
+- LinkedIn: https://www.linkedin.com/in/helenkim1201/
+
 **스타일 특징**:
-- 배경: `bg-black` (블랙)
+- 배경: `bg-[#50C878]` (에메랄드)
+- 텍스트: 블랙
 - 최소 높이: `min-h-[50vh]`
 - 텍스트 정렬: `text-center`
 

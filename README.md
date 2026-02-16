@@ -107,8 +107,8 @@ portfolio_web/
 
 ### 2. Core Competencies (Proof)
 
-- 4개 역량 카드 (Live Ops, L10N, TTS, Automation)
-- 검은 배경 + 흰색 카드 대비
+- 3개 역량 pillar (Live Ops & Partners, TTS & Content Pipeline, Automation & Data Workflow)
+- 검은 배경, 호버 시 흰색으로 전환
 
 ### 3. Projects Section
 
@@ -116,10 +116,11 @@ portfolio_web/
 - 클릭 시 상세 모달 팝업 (Framer Motion layoutId 애니메이션)
 - 각 프로젝트별 Context, Goal, Role, Approach, Challenges, Outcome 상세 설명
 
-### 4. Capabilities
+### 4. Skills & Tools
 
-- 3개 기둥 (Live Ops & Partners, TTS & Content Pipeline, Automation & Data Workflow)
-- 호버 시 배경색 전환 효과
+- 3개 카드 (Product Ops & Collaboration, Data & Automation, Design & Media Production)
+- 흰색 카드, 호버 시 검은색으로 전환
+- 사용 도구 태그 표시
 
 ### 5. About Section
 
@@ -143,18 +144,18 @@ portfolio_web/
 | Section | ID | Background | Purpose |
 |---------|-----|-----------|---------|
 | Hero | `#hero` | `#F3F0E7` (베이지) | 첫인상, 자기소개 |
-| Proof | `#proof` | `#000000` (블랙) | 핵심 역량 증명 |
-| Projects | `#projects` | `#FF2E00` (레드) | 프로젝트 케이스스터디 |
-| Capabilities | `#capabilities` | `#3B27BA` (퍼플) | 역량 상세 |
-| About | `#about` | `#F3F0E7` (베이지) | 자기소개 |
-| Contact | `#contact` | `#000000` (블랙) | 연락처 |
+| Proof | `#proof` | `#000000` (블랙) | 핵심 역량 증명 (3개 pillar) |
+| Projects | `#projects` | `#50C878` (에메랄드) | 프로젝트 케이스스터디 |
+| Skills | `#skills` | `#F3F0E7` (베이지) | 사용 도구 및 스킬 |
+| About | `#about` | `#000000` (블랙) | 자기소개 |
+| Contact | `#contact` | `#50C878` (에메랄드) | 연락처 |
 
 ---
 
 ## Design Principles
 
 1. **대담한 타이포그래피**: 큰 폰트 사이즈와 명확한 계층 구조
-2. **색상 대비**: 블랙, 레드(`#FF2E00`), 퍼플(`#3B27BA`), 베이지(`#F3F0E7`)로 섹션 구분
+2. **색상 대비**: 블랙(`#000000`), 에메랄드(`#50C878`), 베이지(`#F3F0E7`)로 섹션 구분
 3. **인터랙션**: Framer Motion 기반 부드러운 애니메이션
 4. **모바일 우선**: 반응형 디자인 (lg: breakpoint 기준)
 5. **미니멀리즘**: 불필요한 요소 제거, 콘텐츠 중심
@@ -185,7 +186,10 @@ portfolio_web/
 - ✅ 기본 6개 섹션 구현
 - ✅ 프로젝트 모달 인터랙션
 - ✅ 모바일 반응형
-- ✅ 문서화 완료 (REVIEW, ARCHITECTURE, CONTENT, CHANGELOG)
+- ✅ 문서화 완료 (REVIEW, ARCHITECTURE, CONTENT, CHANGELOG, PORTFOLIO)
+- ✅ 색상 변경 (레드→에메랄드 그린)
+- ✅ 섹션 재구성 (Capabilities→Skills)
+- ✅ 연락처 정보 연결
 
 ### v0.2.0 (계획 중)
 
@@ -230,8 +234,8 @@ portfolio_web/
 
 ## Contact
 
-- **Email**: [업데이트 예정]
-- **LinkedIn**: [업데이트 예정]
+- **Email**: hano9758@gmail.com
+- **LinkedIn**: [linkedin.com/in/helenkim1201](https://www.linkedin.com/in/helenkim1201/)
 - **Portfolio**: [배포 URL 예정]
 
 ---

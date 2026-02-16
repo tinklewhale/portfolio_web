@@ -14,9 +14,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - App.jsx 모듈 분리 (components/, data/, hooks/ 구조)
 - TypeScript 전환 (.jsx → .tsx)
 - SEO 메타 태그 추가 (index.html)
-- 실제 연락처 정보 연결 (Email, LinkedIn, CV)
 - 접근성 개선 (ARIA, 시맨틱 HTML)
 - 성능 최적화 (번들 사이즈 분석, 코드 스플리팅)
+
+---
+
+## [0.1.1] - 2026-02-16
+
+### Changed
+
+**디자인 및 색상 변경**:
+- 메인 색상: `#FF2E00` (레드) → `#50C878` (에메랄드 그린)
+- Projects 섹션 배경: 레드 → 에메랄드
+- Contact 섹션 배경: 블랙 → 에메랄드
+- About 섹션 배경: 베이지 → 블랙
+- 프로젝트 카드 강조색: 레드 → 에메랄드
+
+**섹션 재구성**:
+- Proof 섹션과 Capabilities 섹션 통합 → Core Competencies (3개 pillar)
+- Skills 섹션 신규 추가 (Product Ops, Data & Automation, Design & Media Production)
+- 섹션 순서: Hero → Proof → Projects → Skills → About → Contact
+
+**연락처 정보 추가**:
+- Email: hano9758@gmail.com 연결
+- LinkedIn: https://www.linkedin.com/in/helenkim1201/ 연결
+- CV 다운로드: /cv.pdf
+- Career Description 다운로드: /career_description.pdf
+
+**콘텐츠 업데이트**:
+- KEYWORDS: 'Jira' → 'AI'
+- Hero 서브타이틀 강조색: 레드 → 에메랄드
+- About 메인 문구 강조색: 그레이 → 에메랄드
+
+### Added
+
+- Career Description 다운로드 버튼 (Sidebar, Hero, Contact)
+- FileText 아이콘 import (Lucide React)
+
+### Fixed
+
+- 모든 연락처 링크 실제 동작 구현
+- 문서 업데이트 (REVIEW, README, ARCHITECTURE, CONTENT, CHANGELOG)
+- PORTFOLIO.md 신규 생성 (모든 텍스트 콘텐츠 정리)
 
 ---
 

@@ -2,7 +2,7 @@
 
 > 프로젝트 수정 전 검토 및 개선 사항 정리
 > 최초 작성: 2026-02-15
-> 최종 업데이트: 2026-02-15
+> 최종 업데이트: 2026-02-16
 
 ---
 
@@ -45,7 +45,7 @@
 
 - [ ] **[Easy]** 반복 사용 상수 분리 (색상, 섹션 ID 등)
   - 위치: src/constants/colors.js, sections.js
-  - 예: `#F3F0E7`, `#FF2E00`, `#3B27BA` 등
+  - 예: `#F3F0E7`, `#50C878`, `#000000` 등
 
 ---
 
@@ -64,10 +64,11 @@
 
 ### P1: 중요
 
-- [ ] **[Easy]** CTA 버튼 실제 동작 구현
-  - Download CV: 실제 파일 다운로드 링크 연결 ([App.jsx:166-169](src/App.jsx#L166-L169), [460-462](src/App.jsx#L460-L462), [626-628](src/App.jsx#L626-L628))
-  - Email Me: mailto: 링크 추가 ([620-622](src/App.jsx#L620-L622))
-  - LinkedIn Profile: 실제 URL 연결 ([623-625](src/App.jsx#L623-L625))
+- [x] **[Easy]** CTA 버튼 실제 동작 구현 (2026-02-16 완료)
+  - Download CV: /cv.pdf 연결 완료
+  - Career Description: /career_description.pdf 연결 완료
+  - Email Me: mailto:hano9758@gmail.com 연결 완료
+  - LinkedIn Profile: https://www.linkedin.com/in/helenkim1201/ 연결 완료
 
 - [ ] **[Medium]** 로딩 상태 및 에러 처리
   - Framer Motion 애니메이션 지연 시 로딩 표시
@@ -186,10 +187,11 @@
 
 ### P0: 긴급
 
-- [ ] **[Easy]** 실제 연락처 정보 추가
-  - Email: 실제 이메일 주소 ([620-622](src/App.jsx#L620-L622))
-  - LinkedIn: 프로필 URL ([623-625](src/App.jsx#L623-L625))
-  - CV 파일: /public/helen-kim-cv.pdf
+- [x] **[Easy]** 실제 연락처 정보 추가 (2026-02-16 완료)
+  - Email: hano9758@gmail.com
+  - LinkedIn: https://www.linkedin.com/in/helenkim1201/
+  - CV 파일: /public/cv.pdf
+  - Career Description: /public/career_description.pdf
 
 - [ ] **[Easy]** Footer 연도 동적 변경
   - 현재: "© 2026 Helen Kim Portfolio." ([632](src/App.jsx#L632))
@@ -295,8 +297,9 @@
 | 날짜 | 완료 항목 | 소요 시간 | 비고 |
 |------|-----------|-----------|------|
 | 2026-02-15 | REVIEW.md 작성 | 1h | 체크리스트 정리 |
-| | | | |
-| | | | |
+| 2026-02-16 | 색상 변경 (#FF2E00→#50C878) | 30min | 에메랄드 그린 적용 |
+| 2026-02-16 | 섹션 재구성 (Capabilities→Skills) | 1h | Proof와 Capabilities 통합 |
+| 2026-02-16 | 연락처 정보 연결 | 15min | Email, LinkedIn, CV 링크 |
 
 ---
 

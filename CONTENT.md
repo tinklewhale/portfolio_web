@@ -2,6 +2,7 @@
 
 > 포트폴리오 콘텐츠 업데이트 가이드
 > 작성일: 2026-02-15
+> 최종 업데이트: 2026-02-16
 
 ---
 
@@ -49,9 +50,8 @@ details: {
 
 | 색상 | Hex Code | Tailwind Class | 사용처 |
 |------|----------|----------------|--------|
-| 블랙 | `#000000` | `bg-black` | 프로젝트 3 |
-| 레드 | `#FF2E00` | `bg-[#FF2E00]` | 프로젝트 1, 4 |
-| 퍼플 | `#3B27BA` | `bg-[#3B27BA]` | 프로젝트 2 |
+| 블랙 | `#000000` | `bg-black` | 프로젝트 2 (NAEU Ops) |
+| 에메랄드 | `#50C878` | `bg-[#50C878]` | 프로젝트 1, 4 (RU Live Ops, Auto & Tooling) |
 | 커스텀 | `#YOUR_HEX` | `bg-[#YOUR_HEX]` | 새 프로젝트 |
 
 ---
@@ -60,12 +60,12 @@ details: {
 
 | 섹션 | 라인 | 주요 콘텐츠 |
 |------|------|------------|
-| Hero | [436-492](src/App.jsx#L436-L492) | 타이틀, 자기소개, Summary 카드 |
-| Proof | [495-519](src/App.jsx#L495-L519) | 4개 역량 카드 (title, desc) |
-| Projects | [522-542](src/App.jsx#L522-L542) | PROJECT_DATA 렌더링 |
-| Capabilities | [545-579](src/App.jsx#L545-L579) | 3개 기둥 (Live Ops, TTS, Automation) |
-| About | [582-608](src/App.jsx#L582-L608) | 자기소개 문구, Working Style |
-| Contact | [611-636](src/App.jsx#L611-L636) | CTA 버튼, Footer |
+| Hero | [435-495](src/App.jsx#L435-L495) | 타이틀, 자기소개, Summary 카드 |
+| Proof | [498-538](src/App.jsx#L498-L538) | 3개 역량 pillar (Live Ops, TTS, Automation) |
+| Projects | [541-560](src/App.jsx#L541-L560) | PROJECT_DATA 렌더링 |
+| Skills | [563-585](src/App.jsx#L563-L585) | 3개 스킬 카드 (도구 및 기술) |
+| About | [588-614](src/App.jsx#L588-L614) | 자기소개 문구, Working Style |
+| Contact | [617-644](src/App.jsx#L617-L644) | CTA 버튼, Footer |
 
 ---
 
@@ -79,43 +79,35 @@ details: {
   글로벌 서비스 운영에서 자동화까지,
   <span className="text-[#FF2E00]">실행으로 성과를 만드는 PM</span>
   ```
-- [ ] **Summary 카드** ([466-489](src/App.jsx#L466-L489))
-  - ROLE ([474](src/App.jsx#L474))
-  - STRENGTHS ([478](src/App.jsx#L478))
-  - KEYWORDS ([484](src/App.jsx#L484))
+- [ ] **Summary 카드** ([469-492](src/App.jsx#L469-L492))
+  - ROLE ([477](src/App.jsx#L477))
+  - STRENGTHS ([481](src/App.jsx#L481))
+  - KEYWORDS ([486](src/App.jsx#L486)): KPI, L10N, TTS, AI, SQL, Python
 
-### 3.2 Proof Section
+### 3.2 Proof Section (Core Competencies - 3개 Pillar 통합)
 
-- [ ] **ProofCard 4개** ([502-517](src/App.jsx#L502-L517))
-  - Card 1: Global Live Ops
-  - Card 2: L10N & Content
-  - Card 3: TTS Pipeline
-  - Card 4: Automation
+- [ ] **Pillar 1**: Live Ops & Partners ([506-514](src/App.jsx#L506-L514))
+- [ ] **Pillar 2**: TTS & Content Pipeline ([517-525](src/App.jsx#L517-L525))
+- [ ] **Pillar 3**: Automation & Data Workflow ([528-536](src/App.jsx#L528-L536))
 
-**수정 방법**:
-```javascript
-<ProofCard
-  index={0}
-  title="새 타이틀"
-  desc="새 설명"
-/>
-```
+### 3.3 Skills Section (새 섹션)
 
-### 3.3 Capabilities Section
-
-- [ ] **Pillar 1**: Live Ops & Partners ([550-557](src/App.jsx#L550-L557))
-- [ ] **Pillar 2**: TTS & Content Pipeline ([560-567](src/App.jsx#L560-L567))
-- [ ] **Pillar 3**: Automation & Data Workflow ([570-577](src/App.jsx#L570-L577))
+- [ ] **Card 1**: Product Ops & Collaboration ([553-561](src/App.jsx#L553-L561))
+  - 도구: Jira, Redmine, Notion, MS Office, Figma
+- [ ] **Card 2**: Data & Automation ([564-572](src/App.jsx#L564-L572))
+  - 도구: SQL, Git, AI Tools
+- [ ] **Card 3**: Design & Media Production ([575-583](src/App.jsx#L575-L583))
+  - 도구: Blender, Photoshop, Illustrator, Premiere Pro, After Effects
 
 ### 3.4 About Section
 
-- [ ] **메인 문구** ([586-587](src/App.jsx#L586-L587))
+- [ ] **메인 문구** ([592-593](src/App.jsx#L592-L593))
   ```javascript
   운영을 '사람의 노력'으로만 유지하지 않고,
-  <span className="text-gray-400">시스템으로 재현 가능하게 만드는 데 집중합니다.</span>
+  <span className="text-[#50C878]">시스템으로 재현 가능하게 만드는 데 집중합니다.</span>
   ```
-- [ ] **설명** ([592-594](src/App.jsx#L592-L594))
-- [ ] **Working Style 태그** ([599-604](src/App.jsx#L599-L604))
+- [ ] **설명** ([598-600](src/App.jsx#L598-L600))
+- [ ] **Working Style 태그** ([605-609](src/App.jsx#L605-L609))
   - Data-informed decisions
   - Clear ownership
   - QA-first mindset
@@ -123,12 +115,12 @@ details: {
 
 ### 3.5 Contact Section
 
-- [ ] **헤드라인** ([612-614](src/App.jsx#L612-L614))
+- [ ] **헤드라인** ([618-620](src/App.jsx#L618-L620))
   ```javascript
-  Let's build <span className="text-[#FF2E00]">scalable operations</span> and AI-ready workflows.
+  Let's build <span className="text-white">scalable operations</span> and AI-ready workflows.
   ```
-- [ ] **설명** ([615-617](src/App.jsx#L615-L617))
-- [ ] **Footer** ([632-633](src/App.jsx#L632-L633))
+- [ ] **설명** ([621-623](src/App.jsx#L621-L623))
+- [ ] **Footer** ([640-642](src/App.jsx#L640-L642))
 
 ---
 
@@ -139,72 +131,57 @@ details: {
 | 위치 | 라인 | 버튼 |
 |------|------|------|
 | Sidebar | [166-169](src/App.jsx#L166-L169) | Download CV |
+| Sidebar | [170-173](src/App.jsx#L170-L173) | Career Description |
 | Hero | [460-462](src/App.jsx#L460-L462) | Download CV |
-| Contact | [620-622](src/App.jsx#L620-L622) | Email Me |
-| Contact | [623-625](src/App.jsx#L623-L625) | LinkedIn Profile |
-| Contact | [626-628](src/App.jsx#L626-L628) | Download CV |
+| Hero | [463-465](src/App.jsx#L463-L465) | Career Description |
+| Contact | [626-628](src/App.jsx#L626-L628) | Email Me |
+| Contact | [629-631](src/App.jsx#L629-L631) | LinkedIn Profile |
+| Contact | [632-634](src/App.jsx#L632-L634) | Download CV |
+| Contact | [635-637](src/App.jsx#L635-L637) | Career Description |
 
 ### 4.2 수정 사항
 
-#### Email 연결
+#### Email 연결 (완료)
 
-**현재** ([620-622](src/App.jsx#L620-L622)):
+**현재** ([626-628](src/App.jsx#L626-L628)):
 ```javascript
-<button className="bg-[#3B27BA] px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+<a href="mailto:hano9758@gmail.com" className="...">
   Email Me
-</button>
-```
-
-**수정 후**:
-```javascript
-<button
-  onClick={() => window.location.href = 'mailto:your-email@example.com'}
-  className="bg-[#3B27BA] px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
->
-  Email Me
-</button>
-```
-
-#### LinkedIn 연결
-
-**현재** ([623-625](src/App.jsx#L623-L625)):
-```javascript
-<button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
-  LinkedIn Profile
-</button>
-```
-
-**수정 후**:
-```javascript
-<button
-  onClick={() => window.open('https://linkedin.com/in/yourprofile', '_blank')}
-  className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
->
-  LinkedIn Profile
-</button>
-```
-
-#### CV 다운로드
-
-**현재** ([166-169](src/App.jsx#L166-L169)):
-```javascript
-<button className="flex items-center justify-between bg-black text-white text-xs px-3 py-2 rounded-lg hover:bg-[#FF2E00] transition-colors">
-  <span>Download CV</span>
-  <Download size={12} />
-</button>
-```
-
-**수정 후**:
-```javascript
-<a href="/helen-kim-cv.pdf" download>
-  <button className="flex items-center justify-between bg-black text-white text-xs px-3 py-2 rounded-lg hover:bg-[#FF2E00] transition-colors">
-    <span>Download CV</span>
-    <Download size={12} />
-  </button>
 </a>
 ```
 
-**파일 위치**: `/public/helen-kim-cv.pdf` (생성 필요)
+#### LinkedIn 연결 (완료)
+
+**현재** ([629-631](src/App.jsx#L629-L631)):
+```javascript
+<a href="https://www.linkedin.com/in/helenkim1201/" target="_blank" rel="noopener noreferrer" className="...">
+  LinkedIn Profile
+</a>
+```
+
+#### CV 다운로드 (완료)
+
+**현재** ([166-169](src/App.jsx#L166-L169)):
+```javascript
+<a href="/cv.pdf" download="2026_김헬렌 이력서.pdf" className="...">
+  <span>Download CV</span>
+  <Download size={12} />
+</a>
+```
+
+**파일 위치**: `/public/cv.pdf` (업로드 필요)
+
+#### Career Description 다운로드 (추가)
+
+**현재** ([170-173](src/App.jsx#L170-L173)):
+```javascript
+<a href="/career_description.pdf" download="2026.02_김헬렌 경력기술서.pdf" className="...">
+  <span>Career Description</span>
+  <FileText size={12} />
+</a>
+```
+
+**파일 위치**: `/public/career_description.pdf` (업로드 필요)
 
 ---
 
@@ -388,19 +365,21 @@ const { t } = useTranslation();
 
 ## 9. Footer 연도 동적 변경
 
-### 9.1 현재 코드 ([632](src/App.jsx#L632))
+### 9.1 현재 코드 ([641](src/App.jsx#L641))
 
 ```javascript
 <span>© 2026 Helen Kim Portfolio.</span>
 ```
 
-### 9.2 수정 후
+### 9.2 수정 권장
 
 ```javascript
 <span>© {new Date().getFullYear()} Helen Kim Portfolio.</span>
 ```
 
 이렇게 하면 매년 자동으로 연도가 업데이트됩니다.
+
+**현재는 2026으로 고정**: 포트폴리오 제작 시점 명시용
 
 ---
 
