@@ -153,7 +153,7 @@ const SIDE_PROJECT_DATA = [
           'NPC 별 보유 대사를 취합하여 보여주는 기능',
           '특정 key값을 검색하면 해당 키 값에 연결되어있는 대사, NPC 정보, 좌표값, 음성 연결 여부를 표기해주는 기능'
         ],
-        image: '/대사검색기.png',
+        image: '/npc-search-tool.png',
       },
       {
         id: 'tool-2',
