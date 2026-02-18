@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, X, Download, ChevronRight, ChevronDown, Check, Menu, FileText, ExternalLink, Image } from 'lucide-react';
+import { ArrowRight, X, Download, ChevronRight, ChevronDown, Check, Menu, FileText, ExternalLink, Image, ZoomIn } from 'lucide-react';
 
 // --- Data: Projects & Case Studies ---
 const PROJECT_DATA = [
@@ -153,7 +153,7 @@ const SIDE_PROJECT_DATA = [
           'NPC 별 보유 대사를 취합하여 보여주는 기능',
           '특정 key값을 검색하면 해당 키 값에 연결되어있는 대사, NPC 정보, 좌표값, 음성 연결 여부를 표기해주는 기능'
         ],
-        image: null, // 플레이스홀더 - 나중에 스크린샷 경로 추가
+        image: '/대사검색기.png',
       },
       {
         id: 'tool-2',
@@ -504,7 +504,7 @@ const IframePreview = ({ url }) => {
 };
 
 // 6. Side Project Detail Content
-const SideItemDetail = ({ item }) => {
+const SideItemDetail = ({ item, onImageClick }) => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -538,9 +538,19 @@ const SideItemDetail = ({ item }) => {
           </div>
         )}
 
-        {/* Image placeholder or iframe preview */}
+        {/* Image, iframe preview, or placeholder */}
         {item.url ? (
           <IframePreview url={item.url} />
+        ) : item.image ? (
+          <div
+            className="relative w-full rounded-xl overflow-hidden border border-white/20 cursor-pointer group"
+            onClick={() => onImageClick(item.image, item.title)}
+          >
+            <img src={item.image} alt={item.title} className="w-full h-auto object-contain" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+              <ZoomIn size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          </div>
         ) : (
           <div className="w-full aspect-video rounded-xl border border-white/20 bg-black/20 flex flex-col items-center justify-center gap-2 text-white/40">
             <Image size={32} />
@@ -560,6 +570,7 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedSideCategory, setExpandedSideCategory] = useState(null);
   const [expandedSideItem, setExpandedSideItem] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null); // { src, alt }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -847,7 +858,7 @@ export default function App() {
                               {/* Item Detail */}
                               <AnimatePresence>
                                 {expandedSideItem === item.id && (
-                                  <SideItemDetail item={item} />
+                                  <SideItemDetail item={item} onImageClick={(src, alt) => setLightboxImage({ src, alt })} />
                                 )}
                               </AnimatePresence>
                             </div>
@@ -930,6 +941,37 @@ export default function App() {
             project={selectedProject}
             onClose={() => setSelectedProject(null)}
           />
+        )}
+      </AnimatePresence>
+
+      {/* Image Lightbox */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+            onClick={() => setLightboxImage(null)}
+          >
+            <button
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+              onClick={() => setLightboxImage(null)}
+            >
+              <X size={28} />
+            </button>
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              src={lightboxImage.src}
+              alt={lightboxImage.alt}
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
