@@ -2,7 +2,7 @@
 
 > Portfolio Web 프로젝트 구조 및 컴포넌트 설명
 > 작성일: 2026-02-15
-> 최종 업데이트: 2026-02-16
+> 최종 업데이트: 2026-02-18
 
 ---
 
@@ -36,7 +36,7 @@ portfolio_web/
 ├── public/
 │   └── vite.svg              # 파비콘 (변경 필요)
 ├── src/
-│   ├── App.jsx               # 메인 컴포넌트 (651줄, 32KB)
+│   ├── App.jsx               # 메인 컴포넌트 (~780줄)
 │   ├── main.jsx              # React 앱 진입점
 │   ├── index.css             # Tailwind CSS 설정
 │   └── assets/
@@ -47,7 +47,7 @@ portfolio_web/
 └── eslint.config.js          # ESLint 규칙
 ```
 
-**현재 문제점**: [App.jsx](src/App.jsx) 단일 파일에 모든 로직 집중 (651줄)
+**현재 문제점**: [App.jsx](src/App.jsx) 단일 파일에 모든 로직 집중 (~780줄)
 
 ### 2.2 예상 리팩토링 후 구조 (제안)
 
@@ -58,10 +58,11 @@ src/
 │   │   ├── Sidebar.jsx
 │   │   └── MobileHeader.jsx
 │   ├── sections/
-│   │   ├── HeroSection.jsx
+│   │   │   ├── HeroSection.jsx
 │   │   ├── ProofSection.jsx
 │   │   ├── ProjectsSection.jsx
-│   │   ├── CapabilitiesSection.jsx
+│   │   ├── SkillsSection.jsx
+│   │   ├── SideProjectsSection.jsx
 │   │   ├── AboutSection.jsx
 │   │   └── ContactSection.jsx
 │   ├── projects/
@@ -98,6 +99,9 @@ App (root)
 │   ├── ProjectsSection (#projects)
 │   │   └── ProjectCard × 4
 │   ├── SkillsSection (#skills) - 3개 카드
+│   ├── SideProjectsSection (#sideprojects) - 3개 카테고리 아코디언
+│   │   ├── IframePreview (URL 미리보기 / fallback)
+│   │   └── SideItemDetail (상세 내용 펼침)
 │   ├── AboutSection (#about)
 │   └── ContactSection (#contact)
 └── AnimatePresence
@@ -116,7 +120,7 @@ App (root)
 ```
 
 **주요 기능**:
-- 6개 섹션 버튼 (`hero`, `proof`, `projects`, `capabilities`, `about`, `contact`)
+- 7개 섹션 버튼 (`hero`, `proof`, `projects`, `skills`, `sideprojects`, `about`, `contact`)
 - 현재 활성 섹션에 따라 크기 변경 (`flex-[2]` vs `flex-1`)
 - Framer Motion의 `layoutId="activeDot"` 으로 활성 표시 애니메이션
 - `scrollIntoView({ behavior: 'smooth' })` 스크롤 이동
@@ -210,7 +214,40 @@ App (root)
 
 ---
 
-#### 3.2.4 ProofCard (라인 381-389)
+#### 3.2.4 IframePreview (라인 395-442)
+
+**역할**: URL이 있는 Side Project 항목의 iframe 미리보기 제공
+
+**Props**:
+```javascript
+{ url: string }
+```
+
+**주요 기능**:
+- iframe으로 외부 URL 미리보기 표시
+- 로드 실패 시 "새 창에서 보기" 링크로 fallback
+- sandbox 속성으로 보안 제어
+- 우측 상단에 외부 링크 아이콘 버튼
+
+---
+
+#### 3.2.5 SideItemDetail (라인 445-491)
+
+**역할**: Side Project 하위 항목의 상세 내용 표시
+
+**Props**:
+```javascript
+{ item: { description: string[], summary?: string, techNote?: string, url?: string, image?: string } }
+```
+
+**주요 기능**:
+- Framer Motion 애니메이션으로 펼침/접힘
+- summary, description 리스트, techNote 조건부 렌더링
+- URL이 있으면 IframePreview, 없으면 이미지 플레이스홀더 표시
+
+---
+
+#### 3.2.6 ProofCard (라인 ~385)
 
 **역할**: Core Competencies 섹션의 카드 컴포넌트
 
@@ -271,6 +308,35 @@ App (root)
   3. TTS Pipeline (Efficiency & Quality)
   4. Auto & Tooling (Time Saving)
 
+#### SIDE_PROJECT_DATA (라인 141-199)
+
+**구조**:
+```javascript
+[
+  {
+    id: 'tools',
+    category: '01',
+    title: '업무용 툴',
+    items: [
+      {
+        id: 'tool-1',
+        title: '인게임 NPC 통합 정보 확인 툴 (시각화)',
+        description: string[],
+        image: string | null,      // 스크린샷 경로 (플레이스홀더)
+      },
+      // ...
+    ]
+  },
+  // 02. 콘텐츠, 03. 프로젝트
+]
+```
+
+**특징**:
+- 3개 카테고리: 업무용 툴, 콘텐츠, 프로젝트
+- 아코디언 UI로 카테고리 → 하위 항목 → 상세 내용 펼침
+- URL이 있는 항목은 iframe 미리보기, 없는 항목은 이미지 플레이스홀더
+- Notion URL은 iframe 차단 가능성 있어 fallback 링크 제공
+
 **개선 필요 사항**:
 - [ ] JSON 파일로 분리 (`src/data/projects.json`)
 - [ ] 타입 정의 (TypeScript 전환 시)
@@ -286,6 +352,8 @@ App (root)
 const [activeSection, setActiveSection] = useState('hero');
 const [selectedProject, setSelectedProject] = useState(null);
 const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const [expandedSideCategory, setExpandedSideCategory] = useState(null);
+const [expandedSideItem, setExpandedSideItem] = useState(null);
 ```
 
 | State | Type | Purpose |
@@ -293,6 +361,8 @@ const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 | `activeSection` | string | 현재 보이는 섹션 ID (스크롤 감지) |
 | `selectedProject` | object\|null | 모달에 표시할 프로젝트 데이터 |
 | `isMobileMenuOpen` | boolean | 모바일 메뉴 열림 상태 |
+| `expandedSideCategory` | string\|null | Side Projects 펼쳐진 카테고리 ID |
+| `expandedSideItem` | string\|null | Side Projects 펼쳐진 하위 항목 ID |
 
 ### 4.2 Side Effects (useEffect)
 
@@ -300,7 +370,7 @@ const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 ```javascript
 useEffect(() => {
   const handleScroll = () => {
-    const sections = ['hero', 'proof', 'projects', 'capabilities', 'about', 'contact'];
+    const sections = ['hero', 'proof', 'projects', 'skills', 'sideprojects', 'about', 'contact'];
     const scrollPosition = window.scrollY + window.innerHeight / 3;
 
     for (const section of sections) {
@@ -428,7 +498,8 @@ Tailwind CSS 기본 breakpoint 사용:
 | **MobileHeader** | `flex` | `hidden` |
 | **Hero Title** | `text-[12vw]` (동적) | `text-[12vw]` (동적) |
 | **Projects Grid** | `grid-cols-1` | `grid-cols-2` |
-| **Capabilities** | `grid-cols-1` | `grid-cols-3` |
+| **Skills** | `grid-cols-1` | `grid-cols-3` |
+| **Side Projects** | `grid-cols-1` | `grid-cols-3` |
 
 ### 7.3 개선 필요 사항
 
@@ -544,7 +615,7 @@ npm run build
 - 최소 높이: `min-h-screen`
 - 그리드: `grid-cols-1 md:grid-cols-2`
 
-### 10.4 Skills Section ([563-585](src/App.jsx#L563-L585))
+### 10.4 Skills Section
 
 **주요 요소**:
 - 타이틀: "Skills & Tools"
@@ -558,7 +629,27 @@ npm run build
 - 카드: 흰색 배경, 호버 시 `hover:bg-black hover:text-white`
 - 그리드: `grid-cols-1 lg:grid-cols-3`
 
-### 10.5 About Section ([588-614](src/App.jsx#L588-L614))
+### 10.5 Side Projects Section (#sideprojects)
+
+**주요 요소**:
+- 타이틀: "Side Projects"
+- 3개 카테고리 카드 (아코디언):
+  1. 업무용 툴 (인게임 NPC 통합 정보 확인 툴, NPC 대사 정보 자동 갱신 툴)
+  2. 콘텐츠 (Notion 기반 콘텐츠 포트폴리오)
+  3. 프로젝트 (제품 홍보용 웹 제작)
+
+**인터랙션**:
+- 카테고리 카드 클릭 → 하위 항목 리스트 펼침
+- 하위 항목 클릭 → 상세 내용 펼침 (설명 + iframe/이미지)
+- URL 항목: iframe 미리보기 (차단 시 새 창 링크 fallback)
+- 이미지 없는 항목: 플레이스홀더 표시
+
+**스타일 특징**:
+- 배경: `bg-[#50C878]` (에메랄드)
+- 카테고리 카드: 선택 시 `bg-white text-black`, 미선택 시 `bg-black/20`
+- Framer Motion 애니메이션: 펼침/접힘, ChevronDown 회전
+
+### 10.7 About Section
 
 **주요 요소**:
 - 메인 문구: "운영을 '사람의 노력'으로만 유지하지 않고..."
@@ -570,7 +661,7 @@ npm run build
 - 텍스트: 흰색
 - 최대 너비: `max-w-4xl mx-auto`
 
-### 10.6 Contact Section ([617-644](src/App.jsx#L617-L644))
+### 10.8 Contact Section
 
 **주요 요소**:
 - 헤드라인: "Let's build scalable operations..."

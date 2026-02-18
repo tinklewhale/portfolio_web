@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, X, Download, ChevronRight, Check, Menu, FileText } from 'lucide-react';
+import { ArrowRight, X, Download, ChevronRight, ChevronDown, Check, Menu, FileText, ExternalLink, Image } from 'lucide-react';
 
 // --- Data: Projects & Case Studies ---
 const PROJECT_DATA = [
@@ -138,6 +138,66 @@ const PROJECT_DATA = [
   }
 ];
 
+// --- Data: Side Projects ---
+const SIDE_PROJECT_DATA = [
+  {
+    id: 'tools',
+    category: '01',
+    title: '업무용 툴',
+    items: [
+      {
+        id: 'tool-1',
+        title: '인게임 NPC 통합 정보 확인 툴 (시각화)',
+        description: [
+          'NPC와 몬스터의 위치 및 수량을 맵에 표기해주는 검색 기능',
+          'NPC 별 보유 대사를 취합하여 보여주는 기능',
+          '특정 key값을 검색하면 해당 키 값에 연결되어있는 대사, NPC 정보, 좌표값, 음성 연결 여부를 표기해주는 기능'
+        ],
+        image: null, // 플레이스홀더 - 나중에 스크린샷 경로 추가
+      },
+      {
+        id: 'tool-2',
+        title: 'NPC 대사 정보 자동 갱신 툴',
+        summary: '게임 개발 과정에서 발생하는 파편화된 NPC 관련 데이터를 하나로 통합하고, 분석하여, 사람이 보기 좋은 형태로 가공하는 자동화 도구',
+        description: [
+          '데이터 통합: 여러 곳에 흩어져 있는 대사(Dialogue, Caption, CutScenePreset), NPC 정보, 음성 정보, 번역/텍스트 정보 등 수많은 CSV 파일을 하나의 데이터베이스로 불러와 통합',
+          'NPC별 대사량 집계: 어떤 NPC가 얼마나 많은 대사를 가지고 있는지 종류별로 집계하여 NPC의 중요도 파악 및 성우 녹음 대상 선정 등 기획 업무 지원',
+          '데이터 무결성 검증: 대사와 NPC 정보의 올바른 연결 확인, L10N key와 실제 대사 출처 교차 검증, 음성 파일 존재 여부 확인 및 대체 대사 탐색',
+          '자동화 및 편의 기능: 수작업 취합/분석 시간 절감, 인간형/몬스터형/voice_file 등 기준별 분류 엑셀 시트 생성, 핵심 정보 자동 매칭 기능'
+        ],
+        techNote: 'SQLite 인메모리(in-memory) 데이터베이스 활용 — 스크립트 실행 시마다 메모리상에 임시 DB를 생성하여 CSV 파일들을 테이블로 불러와 사용',
+        image: null,
+      }
+    ]
+  },
+  {
+    id: 'content',
+    category: '02',
+    title: '콘텐츠',
+    items: [
+      {
+        id: 'content-1',
+        title: '콘텐츠 포트폴리오',
+        description: ['Notion 기반 콘텐츠 포트폴리오'],
+        url: 'https://satisfying-substance-8c4.notion.site/30ba0a7687f9802f92f6eda12ada5c3e?source=copy_link',
+      }
+    ]
+  },
+  {
+    id: 'project',
+    category: '03',
+    title: '프로젝트',
+    items: [
+      {
+        id: 'project-1',
+        title: '제품 홍보용 웹 제작',
+        description: ['콘텐츠, 디자인 및 배포까지 1인 진행'],
+        url: 'https://rituallywebybti.vercel.app/',
+      }
+    ]
+  }
+];
+
 // --- Components ---
 
 // 1. Navigation Sidebar
@@ -147,6 +207,7 @@ const Sidebar = ({ activeSection }) => {
     { id: 'proof', label: 'Core Competencies', color: 'bg-black', text: 'text-white' },
     { id: 'projects', label: 'Projects', color: 'bg-[#50C878]', text: 'text-white' },
     { id: 'skills', label: 'Skills', color: 'bg-[#F3F0E7]', text: 'text-black' },
+    { id: 'sideprojects', label: 'Side Projects', color: 'bg-[#50C878]', text: 'text-white' },
     { id: 'about', label: 'About', color: 'bg-black', text: 'text-white' },
     { id: 'contact', label: 'Contact', color: 'bg-[#50C878]', text: 'text-white' },
   ];
@@ -392,16 +453,117 @@ const ProofCard = ({ title, desc, index }) => (
   </div>
 );
 
+// 5. Side Project - iframe preview with fallback
+const IframePreview = ({ url }) => {
+  const [iframeFailed, setIframeFailed] = useState(false);
+
+  if (iframeFailed || !url) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-3 rounded-xl transition-colors text-sm font-bold"
+      >
+        <ExternalLink size={16} />
+        새 창에서 보기
+      </a>
+    );
+  }
+
+  return (
+    <div className="relative w-full rounded-xl overflow-hidden border border-white/20 bg-black/20">
+      <div className="aspect-video">
+        <iframe
+          src={url}
+          title="Preview"
+          className="w-full h-full"
+          sandbox="allow-scripts allow-same-origin allow-popups"
+          onError={() => setIframeFailed(true)}
+          onLoad={(e) => {
+            try {
+              // If we can't access contentWindow, iframe might be blocked
+              const doc = e.target.contentDocument;
+              if (!doc) setIframeFailed(true);
+            } catch {
+              // Cross-origin — iframe loaded but we can't inspect it, which is fine
+            }
+          }}
+        />
+      </div>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white p-1.5 rounded-lg transition-colors"
+      >
+        <ExternalLink size={14} />
+      </a>
+    </div>
+  );
+};
+
+// 6. Side Project Detail Content
+const SideItemDetail = ({ item }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      className="overflow-hidden"
+    >
+      <div className="pt-4 pb-2 space-y-4">
+        {/* Summary if exists */}
+        {item.summary && (
+          <p className="text-white/90 text-sm leading-relaxed bg-white/10 p-4 rounded-xl">
+            {item.summary}
+          </p>
+        )}
+
+        {/* Description list */}
+        <ul className="space-y-2">
+          {item.description.map((desc, i) => (
+            <li key={i} className="flex gap-2 items-start text-sm text-white/80">
+              <div className="w-1.5 h-1.5 bg-white rounded-full mt-1.5 shrink-0" />
+              <span>{desc}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Tech note if exists */}
+        {item.techNote && (
+          <div className="bg-black/30 p-3 rounded-lg text-xs text-white/60 font-mono">
+            {item.techNote}
+          </div>
+        )}
+
+        {/* Image placeholder or iframe preview */}
+        {item.url ? (
+          <IframePreview url={item.url} />
+        ) : (
+          <div className="w-full aspect-video rounded-xl border border-white/20 bg-black/20 flex flex-col items-center justify-center gap-2 text-white/40">
+            <Image size={32} />
+            <span className="text-xs">스크린샷 준비 중</span>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
 // --- Main App Component ---
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedSideCategory, setExpandedSideCategory] = useState(null);
+  const [expandedSideItem, setExpandedSideItem] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'proof', 'projects', 'skills', 'about', 'contact'];
+      const sections = ['hero', 'proof', 'projects', 'skills', 'sideprojects', 'about', 'contact'];
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       for (const section of sections) {
@@ -545,7 +707,7 @@ export default function App() {
           <section id="projects" className="min-h-screen bg-[#50C878] rounded-3xl p-8 lg:p-12 text-white">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
               <div>
-                <span className="border border-white/30 px-3 py-1 rounded-full text-xs font-mono mb-4 inline-block">02 / Selected Work</span>
+                <span className="border border-white/30 px-3 py-1 rounded-full text-xs font-mono mb-4 inline-block">Selected Work</span>
                 <h2 className="text-6xl md:text-8xl font-bold tracking-tight">Recent Projects</h2>
               </div>
               <div className="text-right hidden md:block">
@@ -607,10 +769,102 @@ export default function App() {
             </div>
           </section>
 
+          {/* Side Projects Section */}
+          <section id="sideprojects" className="bg-[#50C878] rounded-3xl p-8 lg:p-12 text-white">
+            <div className="mb-12 border-b border-white/20 pb-4 flex justify-between items-end">
+              <h2 className="text-4xl font-bold">Side Projects</h2>
+              <span className="font-mono text-sm text-white/80">PERSONAL WORK</span>
+            </div>
+
+            {/* Category Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {SIDE_PROJECT_DATA.map((cat) => (
+                <div key={cat.id} className="flex flex-col gap-4">
+                  {/* Category Card */}
+                  <motion.button
+                    onClick={() => {
+                      if (expandedSideCategory === cat.id) {
+                        setExpandedSideCategory(null);
+                        setExpandedSideItem(null);
+                      } else {
+                        setExpandedSideCategory(cat.id);
+                        setExpandedSideItem(null);
+                      }
+                    }}
+                    className={`p-8 rounded-2xl text-left transition-all border border-white/20 ${
+                      expandedSideCategory === cat.id
+                        ? 'bg-white text-black'
+                        : 'bg-black/20 hover:bg-black/30 text-white'
+                    }`}
+                    whileHover={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <span className="font-mono text-xs opacity-60 block mb-2">{cat.category}</span>
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-2xl font-bold">{cat.title}</h3>
+                      <motion.div
+                        animate={{ rotate: expandedSideCategory === cat.id ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ChevronDown size={20} />
+                      </motion.div>
+                    </div>
+                  </motion.button>
+
+                  {/* Expanded Items List */}
+                  <AnimatePresence>
+                    {expandedSideCategory === cat.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="space-y-3">
+                          {cat.items.map((item) => (
+                            <div key={item.id}>
+                              {/* Item Button */}
+                              <button
+                                onClick={() => setExpandedSideItem(expandedSideItem === item.id ? null : item.id)}
+                                className={`w-full text-left p-4 rounded-xl transition-all ${
+                                  expandedSideItem === item.id
+                                    ? 'bg-white/20 border border-white/30'
+                                    : 'bg-black/20 hover:bg-black/30 border border-transparent'
+                                }`}
+                              >
+                                <div className="flex justify-between items-center">
+                                  <span className="font-bold text-sm">{item.title}</span>
+                                  <motion.div
+                                    animate={{ rotate: expandedSideItem === item.id ? 90 : 0 }}
+                                    transition={{ duration: 0.2 }}
+                                  >
+                                    <ChevronRight size={16} />
+                                  </motion.div>
+                                </div>
+                              </button>
+
+                              {/* Item Detail */}
+                              <AnimatePresence>
+                                {expandedSideItem === item.id && (
+                                  <SideItemDetail item={item} />
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* 5. ABOUT Section */}
           <section id="about" className="bg-black rounded-3xl p-8 lg:p-20 text-white">
             <div className="max-w-4xl mx-auto">
-              <span className="font-mono text-sm text-white/60 mb-6 block">04 / About Helen</span>
+              <span className="font-mono text-sm text-white/60 mb-6 block">About Helen</span>
               <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-12">
                 운영을 '사람의 노력'으로만 유지하지 않고,<br />
                 <span className="text-[#50C878]">시스템으로 재현 가능하게 만드는 데 집중합니다.</span>

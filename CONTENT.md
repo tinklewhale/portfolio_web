@@ -2,7 +2,7 @@
 
 > 포트폴리오 콘텐츠 업데이트 가이드
 > 작성일: 2026-02-15
-> 최종 업데이트: 2026-02-16
+> 최종 업데이트: 2026-02-18
 
 ---
 
@@ -63,9 +63,10 @@ details: {
 | Hero | [435-495](src/App.jsx#L435-L495) | 타이틀, 자기소개, Summary 카드 |
 | Proof | [498-538](src/App.jsx#L498-L538) | 3개 역량 pillar (Live Ops, TTS, Automation) |
 | Projects | [541-560](src/App.jsx#L541-L560) | PROJECT_DATA 렌더링 |
-| Skills | [563-585](src/App.jsx#L563-L585) | 3개 스킬 카드 (도구 및 기술) |
-| About | [588-614](src/App.jsx#L588-L614) | 자기소개 문구, Working Style |
-| Contact | [617-644](src/App.jsx#L617-L644) | CTA 버튼, Footer |
+| Skills | 567-608 | 3개 스킬 카드 (도구 및 기술) |
+| Side Projects | 610-700 | 3개 카테고리 아코디언 (업무용 툴, 콘텐츠, 프로젝트) |
+| About | 702-737 | 자기소개 문구, Working Style |
+| Contact | 739-767 | CTA 버튼, Footer |
 
 ---
 
@@ -99,9 +100,18 @@ details: {
 - [ ] **Card 3**: Design & Media Production ([575-583](src/App.jsx#L575-L583))
   - 도구: Blender, Photoshop, Illustrator, Premiere Pro, After Effects
 
-### 3.4 About Section
+### 3.4 Side Projects Section
 
-- [ ] **메인 문구** ([592-593](src/App.jsx#L592-L593))
+- [ ] **카테고리 1 - 업무용 툴**: 인게임 NPC 통합 정보 확인 툴, NPC 대사 정보 자동 갱신 툴
+  - 이미지: 플레이스홀더 (스크린샷 추가 필요)
+- [ ] **카테고리 2 - 콘텐츠**: Notion 기반 콘텐츠 포트폴리오
+  - URL: iframe 미리보기 (Notion 차단 시 fallback)
+- [ ] **카테고리 3 - 프로젝트**: 제품 홍보용 웹 제작
+  - URL: iframe 미리보기
+
+### 3.5 About Section
+
+- [ ] **메인 문구**
   ```javascript
   운영을 '사람의 노력'으로만 유지하지 않고,
   <span className="text-[#50C878]">시스템으로 재현 가능하게 만드는 데 집중합니다.</span>
@@ -113,7 +123,7 @@ details: {
   - QA-first mindset
   - Automate what repeats
 
-### 3.5 Contact Section
+### 3.6 Contact Section
 
 - [ ] **헤드라인** ([618-620](src/App.jsx#L618-L620))
   ```javascript

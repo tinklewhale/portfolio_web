@@ -11,9 +11,10 @@
 2. [Proof Section (Core Competencies)](#2-proof-section-core-competencies)
 3. [Projects Section](#3-projects-section)
 4. [Skills Section](#4-skills-section)
-5. [About Section](#5-about-section)
-6. [Contact Section](#6-contact-section)
-7. [연락처 정보](#7-연락처-정보)
+5. [Side Projects Section](#5-side-projects-section)
+6. [About Section](#6-about-section)
+7. [Contact Section](#7-contact-section)
+8. [연락처 정보](#8-연락처-정보)
 
 ---
 
@@ -140,7 +141,7 @@ Jira/Confluence 보고 자동화 및 Python 기반 도구로 반복 업무 병�
 Recent Projects
 ```
 
-**서브 타이틀**: "02 / Selected Work"
+**서브 타이틀**: "Selected Work"
 
 **안내 문구**: "Click cards for details"
 
@@ -393,7 +394,7 @@ PM이 병목을 발견하면 자동화/툴링으로 실제 시간을 절약하�
 Skills & Tools
 ```
 
-**서브 타이틀**: "03 / Skills"
+**서브 타이틀**: "03 / Skills" (사이드바 기준)
 
 ### Card 1: Product Ops & Collaboration
 
@@ -451,11 +452,67 @@ Blender, Photoshop, Illustrator, Premiere Pro, After Effects
 
 ---
 
-## 5. About Section
+## 5. Side Projects Section
 
 ### 타이틀
 
-**서브 타이틀**: "04 / About Helen"
+```
+Side Projects
+```
+
+**서브 타이틀**: "PERSONAL WORK"
+
+### 카테고리 1: 업무용 툴
+
+#### 1-1. 인게임 NPC 통합 정보 확인 툴 (시각화)
+
+**기능**:
+- NPC와 몬스터의 위치 및 수량을 맵에 표기해주는 검색 기능
+- NPC 별 보유 대사를 취합하여 보여주는 기능
+- 특정 key값을 검색하면 해당 키 값에 연결되어있는 대사, NPC 정보, 좌표값, 음성 연결 여부를 표기해주는 기능
+
+**이미지**: 스크린샷 플레이스홀더 (추후 추가 예정)
+
+#### 1-2. NPC 대사 정보 자동 갱신 툴
+
+**요약**:
+```
+게임 개발 과정에서 발생하는 파편화된 NPC 관련 데이터를 하나로 통합하고, 분석하여, 사람이 보기 좋은 형태로 가공하는 자동화 도구
+```
+
+**주요 기능**:
+- 데이터 통합: 여러 곳에 흩어져 있는 대사(Dialogue, Caption, CutScenePreset), NPC 정보, 음성 정보, 번역/텍스트 정보 등 수많은 CSV 파일을 하나의 데이터베이스로 불러와 통합
+- NPC별 대사량 집계: 어떤 NPC가 얼마나 많은 대사를 가지고 있는지 종류별로 집계하여 NPC의 중요도 파악 및 성우 녹음 대상 선정 등 기획 업무 지원
+- 데이터 무결성 검증: 대사와 NPC 정보의 올바른 연결 확인, L10N key와 실제 대사 출처 교차 검증, 음성 파일 존재 여부 확인 및 대체 대사 탐색
+- 자동화 및 편의 기능: 수작업 취합/분석 시간 절감, 인간형/몬스터형/voice_file 등 기준별 분류 엑셀 시트 생성, 핵심 정보 자동 매칭 기능
+
+**기술 노트**: SQLite 인메모리(in-memory) 데이터베이스 활용 — 스크립트 실행 시마다 메모리상에 임시 DB를 생성하여 CSV 파일들을 테이블로 불러와 사용
+
+**이미지**: 스크린샷 플레이스홀더 (추후 추가 예정)
+
+### 카테고리 2: 콘텐츠
+
+#### 2-1. 콘텐츠 포트폴리오
+
+**설명**: Notion 기반 콘텐츠 포트폴리오
+**URL**: https://satisfying-substance-8c4.notion.site/30ba0a7687f9802f92f6eda12ada5c3e?source=copy_link
+**표시**: iframe 미리보기 (차단 시 새 창 링크 fallback)
+
+### 카테고리 3: 프로젝트
+
+#### 3-1. 제품 홍보용 웹 제작
+
+**설명**: 콘텐츠, 디자인 및 배포까지 1인 진행
+**URL**: https://rituallywebybti.vercel.app/
+**표시**: iframe 미리보기
+
+---
+
+## 6. About Section
+
+### 타이틀
+
+**서브 타이틀**: "About Helen"
 
 ### 메인 문구
 
@@ -481,7 +538,7 @@ Blender, Photoshop, Illustrator, Premiere Pro, After Effects
 
 ---
 
-## 6. Contact Section
+## 7. Contact Section
 
 ### 헤드라인
 
@@ -513,7 +570,7 @@ Based on Raw Materials Design.
 
 ---
 
-## 7. 연락처 정보
+## 8. 연락처 정보
 
 ### Email
 ```
@@ -539,7 +596,7 @@ https://www.linkedin.com/in/helenkim1201/
 
 ---
 
-## 8. 사이드바 (Sidebar)
+## 9. 사이드바 (Sidebar)
 
 ### 프로필 정보
 
@@ -559,12 +616,13 @@ PM
 2. **Core Competencies** (Proof)
 3. **Projects** (Projects)
 4. **Skills** (Skills)
-5. **About** (About)
-6. **Contact** (Contact)
+5. **Side Projects** (Side Projects)
+6. **About** (About)
+7. **Contact** (Contact)
 
 ---
 
-## 9. 색상 가이드
+## 10. 색상 가이드
 
 ### 섹션별 색상
 
@@ -574,6 +632,7 @@ PM
 | Proof | `#000000` (블랙) | 흰색 |
 | Projects | `#50C878` (에메랄드) | 흰색 |
 | Skills | `#F3F0E7` (베이지) | 블랙 |
+| Side Projects | `#50C878` (에메랄드) | 흰색 |
 | About | `#000000` (블랙) | 흰색 |
 | Contact | `#50C878` (에메랄드) | 블랙 |
 
@@ -585,7 +644,7 @@ PM
 
 ---
 
-## 10. 프로젝트 색상
+## 11. 프로젝트 색상
 
 | 프로젝트 | 배경색 |
 |---------|--------|
@@ -596,7 +655,7 @@ PM
 
 ---
 
-## 11. 키워드 및 태그
+## 12. 키워드 및 태그
 
 ### Summary 카드 KEYWORDS
 ```
@@ -628,3 +687,6 @@ KPI, L10N, TTS, AI, SQL, Python
 - 색상 변경 반영: 레드 → 에메랄드
 - 섹션 재구성 반영: Capabilities → Skills
 - 연락처 정보 업데이트
+- 2026-02-18: v0.2.0 반영
+- Side Projects 섹션 추가 (업무용 툴, 콘텐츠, 프로젝트)
+- 섹션 번호 텍스트 제거 ("02 / Selected Work" → "Selected Work", "04 / About Helen" → "About Helen")

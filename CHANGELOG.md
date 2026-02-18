@@ -19,6 +19,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.0] - 2026-02-18
+
+### Added
+
+**Side Projects 섹션 신규 추가**:
+- Skills와 About 사이에 Side Projects 섹션 (`#sideprojects`) 추가
+- 3개 카테고리 카드: 업무용 툴, 콘텐츠, 프로젝트
+- 아코디언 UI: 카테고리 클릭 → 하위 항목 펼침 → 상세 내용 펼침
+- IframePreview 컴포넌트: URL 항목 iframe 미리보기 + 차단 시 새 창 링크 fallback
+- SideItemDetail 컴포넌트: 설명 텍스트, 기술 노트, 이미지 플레이스홀더 표시
+- SIDE_PROJECT_DATA 상수 추가 (3개 카테고리, 4개 하위 항목)
+
+**사이드바 업데이트**:
+- Side Projects 메뉴 항목 추가 (7개 섹션으로 확장)
+- 스크롤 감지 sections 배열에 `sideprojects` 추가
+
+**새 컴포넌트**:
+- IframePreview: iframe 미리보기 with fallback
+- SideItemDetail: Side Project 상세 내용 렌더링
+
+**새 아이콘 import**:
+- ChevronDown, ExternalLink, Image (Lucide React)
+
+### Changed
+
+- Projects 섹션 서브 타이틀: "02 / Selected Work" → "Selected Work" (번호 제거)
+- About 섹션 서브 타이틀: "04 / About Helen" → "About Helen" (번호 제거)
+
+### 상태 추가
+
+- `expandedSideCategory`: Side Projects 펼쳐진 카테고리 ID
+- `expandedSideItem`: Side Projects 펼쳐진 하위 항목 ID
+
+---
+
 ## [0.1.1] - 2026-02-16
 
 ### Changed
@@ -104,7 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Notes
 
-- 현재 [App.jsx](src/App.jsx)는 651줄 단일 파일로 구성 (모듈화 예정)
+- 현재 [App.jsx](src/App.jsx)는 ~780줄 단일 파일로 구성 (모듈화 예정)
 - 연락처 정보는 아직 placeholder 상태
 - SEO 메타 태그 미적용
 - 테스트 환경 미구축
@@ -199,7 +234,7 @@ Closes #42
 | Version | Date | Key Features |
 |---------|------|--------------|
 | 0.1.0 | 2026-02-15 | 초기 구현 + 문서화 완료 |
-| 0.2.0 | TBD | 모듈화 + TypeScript + SEO |
+| 0.2.0 | 2026-02-18 | Side Projects 섹션 추가 |
 | 1.0.0 | TBD | 접근성 + 성능 + 다국어 |
 | 2.0.0 | TBD | CMS + 고급 기능 |
 

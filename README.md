@@ -13,7 +13,7 @@
 헬렌 김(Helen Kim)의 포트폴리오 웹사이트입니다. 글로벌 게임 서비스 운영 경험을 바탕으로 한 PM 역량과 프로젝트 케이스 스터디를 소개합니다.
 
 **주요 특징:**
-- 6개 섹션으로 구성된 단일 페이지 애플리케이션 (SPA)
+- 7개 섹션으로 구성된 단일 페이지 애플리케이션 (SPA)
 - 4개의 상세한 프로젝트 케이스 스터디 (Live Ops, Risk Management, TTS Pipeline, Automation)
 - Framer Motion 기반 인터랙티브 애니메이션
 - 모바일 반응형 디자인
@@ -41,7 +41,7 @@ portfolio_web/
 ├── public/
 │   └── vite.svg              # Favicon (변경 예정)
 ├── src/
-│   ├── App.jsx               # 메인 컴포넌트 (651줄, 32KB)
+│   ├── App.jsx               # 메인 컴포넌트 (~780줄)
 │   ├── main.jsx              # 앱 진입점
 │   ├── index.css             # Tailwind 설정
 │   └── assets/               # 정적 리소스
@@ -53,7 +53,8 @@ portfolio_web/
 ├── ARCHITECTURE.md           # 구조 설명 문서
 ├── REVIEW.md                 # 개선 체크리스트
 ├── CONTENT.md                # 콘텐츠 관리 가이드
-└── CHANGELOG.md              # 변경 이력
+├── CHANGELOG.md              # 변경 이력
+└── PORTFOLIO.md              # 전체 콘텐츠 정리
 ```
 
 **Note**: [App.jsx](src/App.jsx)가 현재 단일 파일로 구성되어 있습니다. 모듈화 작업이 [REVIEW.md](REVIEW.md)에 P0 항목으로 계획되어 있습니다.
@@ -122,17 +123,24 @@ portfolio_web/
 - 흰색 카드, 호버 시 검은색으로 전환
 - 사용 도구 태그 표시
 
-### 5. About Section
+### 5. Side Projects
+
+- 3개 카테고리 카드 (업무용 툴, 콘텐츠, 프로젝트)
+- 아코디언 UI: 카테고리 클릭 → 하위 항목 펼침 → 상세 내용 펼침
+- URL 항목: iframe 미리보기 (차단 시 새 창 링크 fallback)
+- 업무용 툴: 설명 텍스트 + 이미지 플레이스홀더
+
+### 6. About Section
 
 - 자기소개 및 Working Style 태그
 - 운영 철학 강조
 
-### 6. Contact Section
+### 7. Contact Section
 
 - Email, LinkedIn, CV 다운로드 버튼
 - Footer 정보
 
-### 7. Navigation
+### 8. Navigation
 
 - **데스크톱**: 좌측 고정 사이드바 (섹션별 버튼, 현재 섹션 표시)
 - **모바일**: 상단 햄버거 메뉴
@@ -147,6 +155,7 @@ portfolio_web/
 | Proof | `#proof` | `#000000` (블랙) | 핵심 역량 증명 (3개 pillar) |
 | Projects | `#projects` | `#50C878` (에메랄드) | 프로젝트 케이스스터디 |
 | Skills | `#skills` | `#F3F0E7` (베이지) | 사용 도구 및 스킬 |
+| Side Projects | `#sideprojects` | `#50C878` (에메랄드) | 사이드 프로젝트 |
 | About | `#about` | `#000000` (블랙) | 자기소개 |
 | Contact | `#contact` | `#50C878` (에메랄드) | 연락처 |
 
@@ -181,7 +190,14 @@ portfolio_web/
 
 ## Roadmap
 
-### v0.1.0 (현재)
+### v0.2.0 (현재)
+
+- ✅ Side Projects 섹션 추가 (업무용 툴, 콘텐츠, 프로젝트)
+- ✅ 아코디언 UI + iframe 미리보기
+- ✅ 사이드바 7개 섹션으로 확장
+- ✅ 섹션 번호 텍스트 정리
+
+### v0.1.0
 
 - ✅ 기본 6개 섹션 구현
 - ✅ 프로젝트 모달 인터랙션
