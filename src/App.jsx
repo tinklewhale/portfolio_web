@@ -153,20 +153,22 @@ const SIDE_PROJECT_DATA = [
           'NPC 별 보유 대사를 취합하여 보여주는 기능',
           '특정 key값을 검색하면 해당 키 값에 연결되어있는 대사, NPC 정보, 좌표값, 음성 연결 여부를 표기해주는 기능'
         ],
-        image: '/npc-search-tool.png',
+        image: null,
+        images: ['/npc-search-tool.png', '/l10n-data-searching.png'],
       },
       {
         id: 'tool-2',
         title: 'NPC 대사 정보 자동 갱신 툴',
         summary: '게임 개발 과정에서 발생하는 파편화된 NPC 관련 데이터를 하나로 통합하고, 분석하여, 사람이 보기 좋은 형태로 가공하는 자동화 도구',
         description: [
-          '데이터 통합: 여러 곳에 흩어져 있는 대사(Dialogue, Caption, CutScenePreset), NPC 정보, 음성 정보, 번역/텍스트 정보 등 수많은 CSV 파일을 하나의 데이터베이스로 불러와 통합',
+          '데이터 통합: 여러 곳에 흩어져 있는 대사(Dialogue, Caption, CutScenePreset), NPC 정보, 음성 정보, 번역/텍스트 정보 등 수많은 CSV 파일을 하나의 데이터베이스로 불러와 통합 후, 인게임 대사 발화 순서대로 정렬하여 볼 수 있도록 함',
           'NPC별 대사량 집계: 어떤 NPC가 얼마나 많은 대사를 가지고 있는지 종류별로 집계하여 NPC의 중요도 파악 및 성우 녹음 대상 선정 등 기획 업무 지원',
           '데이터 무결성 검증: 대사와 NPC 정보의 올바른 연결 확인, L10N key와 실제 대사 출처 교차 검증, 음성 파일 존재 여부 확인 및 대체 대사 탐색',
           '자동화 및 편의 기능: 수작업 취합/분석 시간 절감, 인간형/몬스터형/voice_file 등 기준별 분류 엑셀 시트 생성, 핵심 정보 자동 매칭 기능'
         ],
         techNote: 'SQLite 인메모리(in-memory) 데이터베이스 활용 — 스크립트 실행 시마다 메모리상에 임시 DB를 생성하여 CSV 파일들을 테이블로 불러와 사용',
         image: null,
+        images: ['/united_lines1.png', '/united_lines2.png'],
       }
     ]
   },
@@ -538,9 +540,24 @@ const SideItemDetail = ({ item, onImageClick }) => {
           </div>
         )}
 
-        {/* Image, iframe preview, or placeholder */}
+        {/* Image(s), iframe preview, or placeholder */}
         {item.url ? (
           <IframePreview url={item.url} />
+        ) : item.images ? (
+          <div className="flex flex-col gap-4">
+            {item.images.map((imgSrc, index) => (
+              <div
+                key={index}
+                className="relative w-full rounded-xl overflow-hidden border border-white/20 cursor-pointer group"
+                onClick={() => onImageClick(imgSrc, item.title)}
+              >
+                <img src={imgSrc} alt={`${item.title} ${index + 1}`} className="w-full h-auto object-contain" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                  <ZoomIn size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : item.image ? (
           <div
             className="relative w-full rounded-xl overflow-hidden border border-white/20 cursor-pointer group"
