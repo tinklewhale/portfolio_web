@@ -279,32 +279,32 @@ const ProjectCard = ({ project, onClick, colSpan = "col-span-1" }) => {
       whileHover={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <div className={`absolute inset-0 ${project.imageColor} transition-colors duration-500 group-hover:bg-opacity-90`} />
+      <div className={`absolute inset-0 bg-[#F3F0E7] transition-colors duration-500 group-hover:bg-opacity-90`} />
 
       {/* Content */}
-      <div className="relative h-full p-8 flex flex-col justify-between text-white z-10">
+      <div className="relative h-full p-8 flex flex-col justify-between text-black z-10">
         <div className="flex justify-between items-start">
           <div className="flex gap-2">
-            <span className="px-3 py-1 border border-white/20 rounded-full text-xs backdrop-blur-md bg-black/20">
+            <span className="px-3 py-1 border border-black/20 rounded-full text-xs backdrop-blur-md bg-white/40">
               {project.status}
             </span>
             {project.tags.slice(0, 2).map((tag, i) => (
-              <span key={i} className="px-3 py-1 border border-white/20 rounded-full text-xs backdrop-blur-md hidden md:inline-block">
+              <span key={i} className="px-3 py-1 border border-black/20 rounded-full text-xs backdrop-blur-md hidden md:inline-block">
                 {tag}
               </span>
             ))}
           </div>
-          <motion.div className="bg-white text-black p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+          <motion.div className="bg-black text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
             <ArrowRight size={16} />
           </motion.div>
         </div>
 
         <div>
           <h3 className="text-4xl font-bold mb-4 leading-none">{project.title}</h3>
-          <p className="text-white/80 text-sm mb-4 line-clamp-2 leading-relaxed">
+          <p className="text-black/80 text-sm mb-4 line-clamp-2 leading-relaxed">
             {project.summary}
           </p>
-          <div className="border-t border-white/20 pt-4 mt-4">
+          <div className="border-t border-black/20 pt-4 mt-4">
             <p className="font-mono text-xs opacity-60 mb-1">OUTCOME</p>
             <p className="text-xl font-bold text-[#50C878] bg-black/80 w-fit px-2 py-1 rounded inline-block">
               {project.outcome}
