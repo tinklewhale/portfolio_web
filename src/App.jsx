@@ -192,8 +192,8 @@ const SIDE_PROJECT_DATA = [
     items: [
       {
         id: 'project-1',
-        title: '제품 홍보용 웹 제작',
-        description: ['콘텐츠, 디자인 및 배포까지 1인 진행'],
+        title: '여성용 제품 홍보용 웹 제작',
+        description: ['마케팅을 위한 콘텐츠 구성, 디자인 및 배포까지 1인 진행'],
         url: 'https://rituallywebybti.vercel.app/',
       }
     ]
