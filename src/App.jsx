@@ -192,6 +192,17 @@ const SIDE_PROJECT_DATA = [
     items: [
       {
         id: 'project-1',
+        title: '친구와 함께하는 뽀모도로',
+        description: [
+          '뽀모도로 타이머에 RPG 라이트 요소를 결합한 생산성 웹앱입니다. 집중 세션(25분)을 완료하면 코인과 아이템 박스를 획득하고, 가챠·합성 시스템으로 배경·악세서리·스킨 등 21종의 아이템을 수집해 고양이·여우 캐릭터를 꾸밀 수 있습니다.',
+          'Supabase Realtime을 활용한 친구방 기능으로 최대 10명이 실시간으로 집중 현황과 아바타를 공유하며 함께 공부할 수 있고, 오늘의 집중 시간 기준 실시간 랭킹도 제공합니다. 로그인 시 클라우드 자동 동기화, 비로그인 게스트 플레이도 지원합니다.',
+          '기술스택: React 19 · TypeScript 5.9 · Vite 7 · Zustand · Framer Motion · Supabase (Auth + Postgres + Realtime)'
+        ],
+        url: 'https://cute-pomodoro-sigma.vercel.app/',
+        images: ['/pomo1.png', '/pomo2.png', '/pomo3.png', '/pomo4.png']
+      },
+      {
+        id: 'project-2',
         title: '여성용 제품 홍보용 웹 제작',
         description: ['마케팅을 위한 콘텐츠 구성, 디자인 및 배포까지 1인 진행'],
         url: 'https://rituallywebybti.vercel.app/',
@@ -540,10 +551,8 @@ const SideItemDetail = ({ item, onImageClick }) => {
           </div>
         )}
 
-        {/* Image(s), iframe preview, or placeholder */}
-        {item.url ? (
-          <IframePreview url={item.url} />
-        ) : item.images ? (
+        {/* Images */}
+        {item.images && (
           <div className="flex flex-col gap-4">
             {item.images.map((imgSrc, index) => (
               <div
@@ -558,7 +567,10 @@ const SideItemDetail = ({ item, onImageClick }) => {
               </div>
             ))}
           </div>
-        ) : item.image ? (
+        )}
+
+        {/* Single Image */}
+        {item.image && !item.images && (
           <div
             className="relative w-full rounded-xl overflow-hidden border border-white/20 cursor-pointer group"
             onClick={() => onImageClick(item.image, item.title)}
@@ -568,7 +580,15 @@ const SideItemDetail = ({ item, onImageClick }) => {
               <ZoomIn size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
-        ) : (
+        )}
+
+        {/* Iframe or External Link */}
+        {item.url && (
+          <IframePreview url={item.url} />
+        )}
+
+        {/* Placeholder if nothing exists */}
+        {!item.url && !item.images && !item.image && (
           <div className="w-full aspect-video rounded-xl border border-white/20 bg-black/20 flex flex-col items-center justify-center gap-2 text-white/40">
             <Image size={32} />
             <span className="text-xs">스크린샷 준비 중</span>
